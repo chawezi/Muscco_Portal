@@ -28,6 +28,7 @@ if(isset($_REQUEST["file"]) && isset($_REQUEST["dir"])){
     $file = urldecode($_REQUEST["file"]);
     $dir = urldecode($_REQUEST["dir"]);
 
+
    
     // Test whether the file name contains illegal characters
         
@@ -41,6 +42,7 @@ if(isset($_REQUEST["file"]) && isset($_REQUEST["dir"])){
             header('Content-Disposition: attachment; filename="'
                                         .basename($filepath).'"');
             header('Expires: 0');
+            header('Content-Transfer-Encoding: binary');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
             header('Content-Length: ' . filesize($filepath));

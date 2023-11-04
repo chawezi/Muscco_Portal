@@ -1,4 +1,4 @@
-﻿-- database backup - 2023-11-02 13:18:35
+﻿-- database backup - 2023-11-04 17:40:34
 SET NAMES utf8;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 SET foreign_key_checks = 0;
@@ -87,7 +87,10 @@ CREATE TABLE `db_backups` (
   `file_name` varchar(64) NOT NULL,
   `date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`backup_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+INSERT INTO `db_backups` VALUES('1','sac8zAqp78dA4SMUpI9kNzqiPRoh4tQuAahBfdMh','2023','../db/muscco_backup_20231102_131835.sql','2023-11-02 15:18:36');
+INSERT INTO `db_backups` VALUES('2','sac8zAqp78dA4SMUpI9kNzqiPRoh4tQuAahBfdMh','shdsjd','../db/muscco_backup_20231102_132021.sql','2023-11-02 15:20:21');
+INSERT INTO `db_backups` VALUES('3','sac8zAqp78dA4SMUpI9kNzqiPRoh4tQuAahBfdMh','22020202','../db/muscco_backup_20231102_135701.sql','2023-11-02 15:57:01');
 DROP TABLE IF EXISTS `departments`;
 
 CREATE TABLE `departments` (
@@ -174,7 +177,6 @@ CREATE TABLE `documents` (
   PRIMARY KEY (`document_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 INSERT INTO `documents` VALUES('1','Leave Application form 2023','','1266134581_1698907360.pdf','2','0','0','2023-11-02 08:42:40','sac8zAqp78dA4SMUpI9kNzqiPRoh4tQuAahBfdMh');
-INSERT INTO `documents` VALUES('2','Systems Engineers','','340463320_1698928472.pdf','8','0','0','2023-11-02 14:34:32','sac8zAqp78dA4SMUpI9kNzqiPRoh4tQuAahBfdMh');
 INSERT INTO `documents` VALUES('3','2023 July Newsletter','','1660598257_1698928556.pdf','9','2','0','2023-11-02 14:35:56','sac8zAqp78dA4SMUpI9kNzqiPRoh4tQuAahBfdMh');
 DROP TABLE IF EXISTS `events`;
 
@@ -468,7 +470,6 @@ CREATE TABLE `positions` (
   `member_of` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`position_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1 COMMENT='Stores Sacco and Muscco Positions';
-INSERT INTO `positions` VALUES('1','IT Admin','0');
 INSERT INTO `positions` VALUES('2','Secretary','0');
 INSERT INTO `positions` VALUES('3','Driver','0');
 INSERT INTO `positions` VALUES('4','Business Development Officer','0');
