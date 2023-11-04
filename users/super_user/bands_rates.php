@@ -52,7 +52,7 @@
                   <div class="chat-box p-9">
                     <div class="table-responsive">
                       <div id="error"></div>
-                    <table id="scroll_hor" class="table border table-striped table-bordered display  dataTable no-footer" style="width: 100%;" aria-describedby="scroll_hor_info">
+                    <table id="scroll_hor" class="table border table-striped table-bordered display  dataTable no-footer" aria-describedby="scroll_hor_info">
                       <thead class="header-item">
                         <th>
                           #

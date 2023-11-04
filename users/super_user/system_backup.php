@@ -6,7 +6,7 @@
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a class="text-muted" href="dashboard.php">Dashboard</a></li>
-            <li class="breadcrumb-item" aria-current="page">Bands & Rates</li>
+            <li class="breadcrumb-item" aria-current="page">System Backups</li>
           </ol>
         </nav>
       </div>
@@ -39,13 +39,6 @@
             <div class="chatting-box app-email-chatting-box">
               <div class="p-9 py-3 border-bottom chat-meta-user d-flex align-items-center justify-content-between">
                 <h5 class="text-dark mb-0 fw-semibold">System Backups</h5>
-                <ul class="list-unstyled mb-0 d-flex align-items-center">
-                  <li class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download My Requisitions">
-                    <a class="btn btn-primary btn-md" href="dashboard.php?page=new_band">
-                      <i class="ti ti-plus"></i> Add Band
-                    </a>
-                  </li>
-                </ul>
               </div>
               <div class="position-relative">
                 <div class="position-relative">
