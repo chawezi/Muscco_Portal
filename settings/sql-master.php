@@ -2925,6 +2925,25 @@
 		}
 	}
 
+	//delete delete_backup
+	if($action == 'delete_backup'){
+		$id = $_GET['id'];
+		$file = $_GET['file'];
+
+		$delete = $con->delete('db_backups', array('backup_id'=>$id));
+		if(!empty($delete)){
+			echo "1";
+			//delete screenshots 
+			if(!empty($file)){
+				if(file_exists("../db/".$file)){
+		            unlink("../db/".$file);
+		        }
+			}	        
+		}else{
+			echo"2";
+		}
+	}
+
 
 	//add/update personale statement
 	if(isset($_POST['add_statement'])){

@@ -179,10 +179,10 @@
 				      </td>
 				      <td>
 				        <div class="action-btn">
-				          <a href="download-file.php?dir=../&file=<?=$post['file_name']?>" class="btn btn-primary btn-sm ms-2" data-id3="<?=$post['backup_id']?>"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="download">
+				          <a href="download-file.php?dir=../../db/&file=<?=$post['file_name']?>" target="_blank"  class="btn btn-primary btn-sm ms-2" title="Download Backup">
 				            <i class="ti ti-download fs-5"></i> 
 				          </a>
-				          <button class="btn btn-danger btn-sm delete_position ms-2" data-id3="<?=$post['backup_id']?>"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
+				          <button class="btn btn-danger btn-sm delete_backups ms-2" data-id3="<?=$post['backup_id']?>" data-file="<?=$post['file_name']?>"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Backup">
 				            <i class="ti ti-trash fs-5"></i> 
 				          </button>
 				        </div>

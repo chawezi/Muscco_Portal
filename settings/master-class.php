@@ -476,9 +476,9 @@ class MasterClass{
 	   $output .= "COMMIT;";
 	   //save filename
 
-	   $DIR = '../../db/'; //saving directory
-	   $filename = '../db/muscco_backup_'.$this->suffix.'.sql';
-	   $this->writeUTF8filename($filename,$output);
+	   $DIR = '../db/'; //saving directory
+	   $filename = 'muscco_backup_'.$this->suffix.'.sql';
+	   $this->writeUTF8filename($DIR.$filename,$output);
 
 	   return $filename;
 	   	

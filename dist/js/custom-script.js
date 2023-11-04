@@ -975,6 +975,36 @@ $(document).on('click', '.advancerequest_week', function(){
        }
     });
 
+    $(document).on('click', '.delete_backups', function(){
+       var id=$(this).data("id3");
+       var file = $(this).data("file");
+
+       if(confirm("Are you sure you want to delete the selected databse backup?")){
+           var action='delete_backup';
+           $.ajax({
+               url:"../../settings/sql-master.php",
+               method:"GET",
+               data:{id:id, file:file, action:action},
+               dataType:"text",
+               success:function(data){ //alert(data);
+                   if(data == 1){
+                       $("#error").fadeIn(1000, function(){
+                           $("#error").html('<div class="alert alert-success" role="alert"> The selected db backup has been deleted successfully.</div>');
+                       });
+                       $("#error").delay(5000).fadeOut(function(){});
+                       setTimeout(' window.location.href = ""; ', 5000);
+                   }else{
+                       $("#error").fadeIn(1000, function(){
+                           $("#error").html('<div class="alert alert-warning" role="alert"> Sorry, there was an error deleteting the selected db backup, please try again!</div>');
+                       });
+                       $("#error").delay(6000).fadeOut(function(){});
+                   }
+                   getDB();
+               }
+           });
+       }
+    });
+
 //update profile picture
 //add member
 $("#add-picture").validate({

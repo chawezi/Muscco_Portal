@@ -59,6 +59,7 @@
                         <div class="card">
                           <div class="card-body p-4">
                             <h4 class="fw-semibold mb-3">Database Backups History</h4>
+                            <div id="error"></div>
                             <div id="show_db"></div>
                           </div>
                         </div>

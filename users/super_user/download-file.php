@@ -46,6 +46,7 @@ if(isset($_REQUEST["file"]) && isset($_REQUEST["dir"])){
             header('Cache-Control: must-revalidate');
             header('Pragma: public');
             header('Content-Length: ' . filesize($filepath));
+            ob_clean();
   
             // Flush system output buffer
             flush(); 
