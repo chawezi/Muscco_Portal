@@ -1782,35 +1782,6 @@ $(document).on('click', '.delete_ticket_category', function(){
    }
 });
 
-//delete department
-$(document).on('click', '.delete_department', function(){
-   var id=$(this).data("id3");
-
-   if(confirm("Are you sure you want to delete this department?"))
-   {
-       var action='delete_department';
-       $.ajax({
-           url:"../../settings/sql-master.php",
-           method:"GET",
-           data:{id:id, action:action},
-           dataType:"text",
-           success:function(data){ //alert(data);
-               if(data == 1){
-                   $("#department_response").fadeIn(1000, function(){
-                       $("#department_response").html('<div class="alert alert-success" role="alert"> The selected department has been deleted successfuly.</div>');
-                   });
-                   $("#department_response").delay(6000).fadeOut(function(){});
-               }else{
-                   $("#department_response").fadeIn(1000, function(){
-                       $("#department_response").html('<div class="alert alert-warning" role="alert"> Sorry, there was an error deleting that dep, please try again!</div>');
-                   });
-                   $("#department_response").delay(6000).fadeOut(function(){});
-               }
-               getDepartments();
-           }
-       });
-   }
-});
 
 //delete department
 $(document).on('click', '.btn_faq_delete', function(){

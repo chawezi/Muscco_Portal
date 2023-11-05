@@ -306,7 +306,62 @@ function addBranch() {
     }
   });
   return false;
-}    
+}  
+
+$("#manage-departments").validate({
+      rules: {
+        department:{required:true}
+      },
+      messages: {
+        department:"Please enter department name"
+      },
+      submitHandler: addDepartment  
+});    
+  /* Handling form functionality */
+function addDepartment() {    
+  var data = $("#manage-departments").serialize();         
+  $.ajax({        
+    type : 'POST',
+    url  : '../../settings/sql-master.php',
+    data : data,
+    beforeSend: function(){ 
+      $("#branch_error").fadeOut();
+      $("#manage_department").html('Adding Branch..');
+      $("#update_branch").html('Updating..');
+    },
+    success : function(response){ //alert(response);
+      if(response == 1) {                 
+       $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-success"> A department has been saved successfully!</div>');
+          $("#manage_department").html('Save Department');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
+        $("#manage-departments")[0].reset();
+      } else if(response == 2) {                 
+        $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-danger"> Sorry, there was an error saving the department, please try again</div>');
+          $("#manage_department").html('Add');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
+      }
+      if(response == 3) {                 
+       $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-success"> A department has been updated successfully!</div>');
+          $("#update_department").html('Update');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
+      } else if(response == 4) {                 
+        $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-danger"> There is nothing to update, please edit first.</div>');
+          $("#update_department").html('Update');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
+      }
+      getDepartments();
+    }
+  });
+  return false;
+}   
 
 $("#add-statement").validate({
       rules: {

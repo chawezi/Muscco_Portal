@@ -732,9 +732,9 @@
 									    array('department_id'=> $con->clean($_POST['id']) )
 									);
 		if(!empty($update_department)){
-			echo"1";
+			echo"3";
 		}else{
-			echo "2";
+			echo "4";
 		}
 	}
 

@@ -1,3 +1,9 @@
+<?php
+  $department = '';
+  if(isset($_GET['department_id'])){
+    $department = $_GET['department_id'];
+  }
+?>
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
   <div class="card-body px-4 py-3">
     <div class="row align-items-center">
@@ -41,7 +47,8 @@
                 <div class="position-relative">
                   <div class="chat-box p-9">
                     <div class="card-body p-4">
-                      <div id="error"></div> 
+                      <div id="error"></div>
+                      <?php if($department == ''){ ?> 
                       <form class="" id="manage-departments" name="manage-departments" method="post" action="">
                         <div class="row">
                             <div class="col-lg-9">
@@ -63,6 +70,37 @@
                             </div>
                         </div>
                       </form>
+                      <?php } else{ 
+                          $get_dep = $con->getRows('departments', array('where'=>'department_id="'.$department.'"', 'return_type'=>'single'));
+                        ?>
+                      <form class="" id="manage-departments" name="manage-departments" method="post" action="">
+                        <div class="row">
+                            <div class="col-lg-7">
+                              <div class="mb-3">
+                                <input type="text" class="form-control" value="<?=$get_dep['department']?>" name="department">
+                              </div>
+                            </div>
+                            <div class="col-lg-5">
+                              <div class="d-md-flex align-items-center">
+                                
+                                <div class="mt-3 mt-md-0 ms-auto">
+                                  <input type="hidden" name="id" value="<?=$department?>">
+                                  <button type="submit" class="btn btn-primary font-medium px-4" name="update_department" id="update_department">
+                                    <div class="d-flex align-items-center">
+                                      Update Department
+                                    </div>
+                                  </button>
+                                  <a href="dashboard.php?page=departments" class="btn btn-primary font-medium px-4" >
+                                    <div class="d-flex align-items-center">
+                                      Add 
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </form>
+                      <?php } ?>
                       <div id="department_response"></div>
                       <div id="show_departments"></div>
                     </div>
@@ -87,17 +125,3 @@
 </div>
 
 <script src="../../dist/libs/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript">
-  function getDepartments(){
-    let action = "get_departments";
-    $.ajax({
-        url:"get_department_data.php",
-        method:"GET",
-        data:{action:action},
-        success:function(data){ 
-            $('#show_departments').html(data);
-        }
-    });
-  }
-  getDepartments();
-</script>
