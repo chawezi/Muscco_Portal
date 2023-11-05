@@ -2,7 +2,7 @@
   <div class="card-body px-4 py-3">
     <div class="row align-items-center">
       <div class="col-9">
-        <h4 class="fw-semibold mb-8">Manage Employees</h4>
+        <h4 class="fw-semibold mb-8">Admin Settings</h4>
         <nav aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a class="text-muted" href="dashboard.php">Dashboard</a></li>
@@ -46,7 +46,7 @@
                   <div class="chat-box p-9">
                     <div class="card">
                     <div class="card-body p-4">
-                      <h4 class="fw-semibold mb-3">Add New  Band</h4>
+                      <h4 class="fw-semibold mb-3">Add New  Band & Rates</h4>
                       <div id="error"></div>
                       <form id="add-ticket" method="post" action="" enctype="multipart/form-data">                            
                         <div class="row">
@@ -99,7 +99,7 @@
 
     <div class="offcanvas offcanvas-start user-chat-box" tabindex="-1" id="chat-sidebar" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel"> Manage Employees</h5>
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel"> Admin Settings</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <?php include('../../layout/admin.php'); ?>

@@ -38,11 +38,11 @@
           <div class="chat-box-inner-part h-100">
             <div class="chatting-box app-email-chatting-box">
               <div class="p-9 py-3 border-bottom chat-meta-user d-flex align-items-center justify-content-between">
-                <h5 class="text-dark mb-0 fw-semibold">Bands & Employees</h5>
+                <h5 class="text-dark mb-0 fw-semibold">Bands & Rates</h5>
                 <ul class="list-unstyled mb-0 d-flex align-items-center">
-                  <li class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download My Requisitions">
+                  <li class="position-relative" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Add New Band">
                     <a class="btn btn-primary btn-md" href="dashboard.php?page=new_band">
-                      <i class="ti ti-plus"></i> Add Band
+                      <i class="ti ti-plus"></i> Add Band & Rates
                     </a>
                   </li>
                 </ul>
@@ -52,75 +52,69 @@
                   <div class="chat-box p-9">
                     <div class="table-responsive">
                       <div id="error"></div>
-                    <table id="scroll_hor" class="table border table-striped table-bordered display  dataTable no-footer" aria-describedby="scroll_hor_info">
-                      <thead class="header-item">
-                        <th>
-                          #
-                        </th>
-                        <th>Band</th>
-                        <th>Accomm. Ceiling </th>
-                        <th>Lumpsum</th>
-                        <th>Accomm.& Meals</th>
-                        <th>No Accomm.& Meals</th>
-                        <th>No Accomm.& With Meals</th>
-                        <th>Action</th>
-                      </thead>
-                      <tbody>
-                        <?php
-                          $bands = $con->getRows('band_rates', array('order_by'=>'band_title asc'));
-                          if(!empty($bands)){
-                            $i=0;
-                            foreach($bands as $band){ 
-                              $i++;
-                        ?>
-                              <tr class="search-items">
-                                <td>
-                                  <?=$i?>
-                                </td>
-                                <td>
-                                  <div class="d-flex align-items-center">
-                                    <div class="ms-3">
-                                      <div class="user-meta-info">
-                                        <h6 class="user-name mb-0" data-name="Emma Adams"><?=$band['band_title']?></h6>
+                      <table id="scroll_hor" class="table border table-striped table-bordered display  dataTable no-footer" aria-describedby="scroll_hor_info">
+                        <thead class="header-item">
+                          <th>Band</th>
+                          <th>Accomm. Ceiling </th>
+                          <th>Lumpsum</th>
+                          <th>Accomm.& Meals</th>
+                          <th>No Accomm.& Meals</th>
+                          <th>No Accomm.& With Meals</th>
+                          <th>Action</th>
+                        </thead>
+                        <tbody>
+                          <?php
+                            $bands = $con->getRows('band_rates', array('order_by'=>'band_title asc'));
+                            if(!empty($bands)){
+                              $i=0;
+                              foreach($bands as $band){ 
+                                $i++;
+                          ?>
+                                <tr class="search-items">
+                                  <td>
+                                    <div class="d-flex align-items-center">
+                                      <div class="ms-3">
+                                        <div class="user-meta-info">
+                                          <h6 class="user-name mb-0" data-name="Emma Adams"><?=$band['band_title']?></h6>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </td>
-                                <td>
-                                  <span class="usr-email-addr"><?=number_format($band['accomodation_ceiling'])?></span>
-                                </td>
-                                <td>
-                                  <span class="usr-location"><?=number_format($band['lumpsum'])?></span>
-                                </td>
-                                <td>
-                                  <span class="usr-ph-no" ><?=number_format($band['with_accomodation'])?></span>
-                                </td> 
-                                <td>
-                                  <span class="usr-ph-no" ><?=number_format($band['withoutaccomodation_nomeals'])?></span>
-                                </td>  
-                                <td>
-                                  <span class="usr-ph-no" ><?=number_format($band['withoutaccomodation_withmeals'])?></span>
-                                </td>                                 
-                                <td>
-                                  <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                                    <div class="btn-group me-2 mb-2" role="group" aria-label="First group">                                    
-                                      <a href="dashboard.php?page=band_details&band_id=<?=$band['band_id']?>" class="btn btn-primary btn-sm"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View Details" >
-                                        <i class="ti ti-pencil fs-4"></i>
-                                      </a>
-                                      <button class="btn btn-sm btn-danger btn-sm btn_delete_band" data-id3="<?=$band['band_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
-                                        <i class="ti ti-trash fs-4"></i>
-                                      </button>
+                                  </td>
+                                  <td>
+                                    <span class="usr-email-addr"><?=number_format($band['accomodation_ceiling'])?></span>
+                                  </td>
+                                  <td>
+                                    <span class="usr-location"><?=number_format($band['lumpsum'])?></span>
+                                  </td>
+                                  <td>
+                                    <span class="usr-ph-no" ><?=number_format($band['with_accomodation'])?></span>
+                                  </td> 
+                                  <td>
+                                    <span class="usr-ph-no" ><?=number_format($band['withoutaccomodation_nomeals'])?></span>
+                                  </td>  
+                                  <td>
+                                    <span class="usr-ph-no" ><?=number_format($band['withoutaccomodation_withmeals'])?></span>
+                                  </td>                                 
+                                  <td>
+                                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                      <div class="btn-group me-2 mb-2" role="group" aria-label="First group">                                    
+                                        <a href="dashboard.php?page=band_details&band_id=<?=$band['band_id']?>" class="btn btn-primary btn-sm"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View Details" >
+                                          <i class="ti ti-pencil fs-4"></i>
+                                        </a>
+                                        <button class="btn btn-sm btn-danger btn-sm btn_delete_band" data-id3="<?=$band['band_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
+                                          <i class="ti ti-trash fs-4"></i>
+                                        </button>
+                                      </div>
+                                      
                                     </div>
-                                    
-                                  </div>
-                                </td>
-                              </tr>
-                        <?php }
-                          }
-                        ?>
-                      </tbody>
-                    </table>
-                </div>
+                                  </td>
+                                </tr>
+                          <?php }
+                            }
+                          ?>
+                        </tbody>
+                      </table>
+                    </div>
                 </div>
               </div>
             </div>
