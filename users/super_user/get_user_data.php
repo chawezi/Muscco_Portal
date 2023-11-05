@@ -25,7 +25,7 @@
   	<?php
   		
   		$members = $con->getRows('muscco_members a, positions b, departments c, system_users d, branches e', 
-  						 array('where'=>'a.position_id=b.position_id and a.department_id=c.department_id and a.muscco_member_id=d.member_id and a.branch=e.branch_id and d.member_id != "'.$_SESSION['USR_ID'].'"','order_by'=>'first_name asc'));
+  						 array('where'=>'a.position_id=b.position_id and a.department_id=c.department_id and a.muscco_member_id=d.member_id and a.branch=e.branch_id','order_by'=>'first_name asc'));
   		if(!empty($members)){
   			$i=0;
   			foreach($members as $member){ 

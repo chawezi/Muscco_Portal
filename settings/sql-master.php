@@ -2957,3 +2957,13 @@
 		}
 		
 	}
+
+	//update branch
+	if(isset($_POST['update_branch'])){
+		$update = $con->update('branches', array('branch_name'=>$con->clean($_POST['branch'])), array('branch_id'=>$_POST['id']));
+		if(!empty($update)){
+			echo "3";
+		}else{
+			echo "4";
+		}
+	}

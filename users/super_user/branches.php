@@ -1,3 +1,9 @@
+<?php
+  $branch = '';
+  if(isset($_GET['branch_id'])){
+    $branch = $_GET['branch_id'];
+  }
+?>
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
   <div class="card-body px-4 py-3">
     <div class="row align-items-center">
@@ -41,7 +47,8 @@
                 <div class="position-relative">
                   <div class="chat-box p-9">
                     <div class="card-body p-4">
-                      <div id="branch_error"></div> 
+                      <div id="branch_error"></div>
+                      <?php if($branch == ''){ ?>
                       <form class="" id="add-branch" name="add-position" method="post" action="">
                         <div class="row">
                             <div class="col-lg-9">
@@ -63,6 +70,38 @@
                             </div>
                         </div>
                       </form>
+                      <?php 
+                        } else{
+                          $get_branch = $con->getRows('branches', array('where'=>'branch_id="'.$branch.'"','return_type'=>'single'));
+                      ?>
+                      <form class="" id="add-branch" name="add-position" method="post" action="">
+                        <div class="row">
+                            <div class="col-lg-7">
+                              <div class="mb-3">
+                                <input type="text" class="form-control" value="<?=$get_branch['branch_name']?>" name="branch">
+                              </div>
+                            </div>
+                            <div class="col-lg-5">
+                              <div class="d-md-flex align-items-center">
+                                
+                                <div class="mt-3 mt-md-0 ms-auto">
+                                  <input type="hidden" name="id" value="<?=$branch?>">
+                                  <button type="submit" class="btn btn-primary font-medium px-4" name="update_branch" id="update_branch">
+                                    <div class="d-flex align-items-center">
+                                      Update
+                                    </div>
+                                  </button>
+                                  <a href="dashboard.php?page=branches" class="btn btn-primary font-medium px-4">
+                                    <div class="d-flex align-items-center">
+                                      Add Branch
+                                    </div>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </form>
+                      <?php } ?>
                       <div id="positions_response"></div>
                       <div id="show_branches"></div>
                     </div>

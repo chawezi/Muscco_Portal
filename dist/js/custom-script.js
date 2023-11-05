@@ -158,7 +158,21 @@ function getDocs(){
       }
   });
 }
-getDB()
+
+function getBranchForm(){
+  let action = 'get_form';
+  $.ajax({
+      url:"get_department_data.php",
+      method:"GET",
+      data:{action:action},
+      success:function(data){ 
+          $('#branch_form').html(data);
+      }
+  });
+}
+
+getBranchForm();
+getDB();
 getDocs();
 getDocCategories();
 getPositions();
@@ -258,6 +272,7 @@ function addBranch() {
     beforeSend: function(){ 
       $("#branch_error").fadeOut();
       $("#add_branch").html('Adding Branch..');
+      $("#update_branch").html('Updating..');
     },
     success : function(response){ //alert(response);
       if(response == 1) {                 
@@ -271,6 +286,19 @@ function addBranch() {
         $("#branch_error").fadeIn(1000, function(){            
           $("#branch_error").html('<div class="alert alert-danger"> Sorry, there was an error saving the branch, please try again</div>');
           $("#add_branch").html('Add');
+        });
+        $("#branch_error").delay(6000).fadeOut(function(){});
+      }
+      if(response == 3) {                 
+       $("#branch_error").fadeIn(1000, function(){            
+          $("#branch_error").html('<div class="alert alert-success"> A branch has been updated successfully!</div>');
+          $("#update_branch").html('Update');
+        });
+        $("#branch_error").delay(6000).fadeOut(function(){});
+      } else if(response == 4) {                 
+        $("#branch_error").fadeIn(1000, function(){            
+          $("#branch_error").html('<div class="alert alert-danger"> There is nothing to update, please edit first.</div>');
+          $("#update_branch").html('Update');
         });
         $("#branch_error").delay(6000).fadeOut(function(){});
       }
