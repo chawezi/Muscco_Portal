@@ -185,16 +185,6 @@
           </li>
 
           <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link" href="dashboard.php?page=invoice_list" aria-expanded="false">
-              <span class="rounded-3">
-                <i class="ti ti-file-invoice"></i>
-              </span>
-              <span class="hide-menu">Invoices</span>
-            </a>
-          </li>
-
-
-          <li class="sidebar-item">
             <a class="sidebar-link sidebar-link" href="dashboard.php?page=bands_rates" aria-expanded="false">
               <span class="rounded-3">
                 <i class="ti ti-settings"></i>
