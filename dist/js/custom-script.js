@@ -384,7 +384,7 @@ function addPosition() {
       $("#add_position").html('Saving Positions..');
       $("#update_position").html('Updating..');
     },
-    success : function(response){ alert(response);
+    success : function(response){ //alert(response);
       if(response == 1) {                 
        $("#position_error").fadeIn(1000, function(){            
           $("#position_error").html('<div class="alert alert-success"> A position has been saved successfully!</div>');
