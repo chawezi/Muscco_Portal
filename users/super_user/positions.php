@@ -1,3 +1,9 @@
+<?php
+  $position_id = '';
+  if(isset($_GET['position_id'])){
+    $position_id = $_GET['position_id'];
+  }
+?>
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
   <div class="card-body px-4 py-3">
     <div class="row align-items-center">
@@ -42,14 +48,17 @@
                   <div class="chat-box p-9">
                     <div class="card-body p-4">
                       <div id="position_error"></div> 
+                      <?php 
+                        if($position_id == ''){
+                      ?>
                       <form class="" id="add-position" name="add-position" method="post" action="">
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-7">
                               <div class="mb-3">
                                 <input type="text" class="form-control" placeholder="Enter Position Name" name="position">
                               </div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-5">
                               <div class="d-md-flex align-items-center">
                                 
                                 <div class="mt-3 mt-md-0 ms-auto">
@@ -63,6 +72,33 @@
                             </div>
                         </div>
                       </form>
+                      <?php 
+                        }else{ 
+                          $get_position = $con->getRows('positions', array('where'=>'position_id="'.$position_id.'"','return_type'=>'single'));
+                      ?>
+                      <form class="" id="add-position" name="add-position" method="post" action="">
+                        <div class="row">
+                            <div class="col-lg-9">
+                              <div class="mb-3">
+                                <input type="text" class="form-control" value="<?=$get_position['position']?>" name="position">
+                              </div>
+                            </div>
+                            <div class="col-lg-3">
+                              <div class="d-md-flex align-items-center">
+                                
+                                <div class="mt-3 mt-md-0 ms-auto">
+                                  <input type="hidden" name="id" value="<?=$position_id?>">
+                                  <button type="submit" class="btn btn-primary font-medium px-4" name="update_position" id="update_position">
+                                    <div class="d-flex align-items-center">
+                                      Update Position
+                                    </div>
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                      </form>
+                      <?php } ?>
                       <div id="positions_response"></div>
                       <div id="show_positions"></div>
                     </div>

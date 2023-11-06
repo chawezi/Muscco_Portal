@@ -130,11 +130,16 @@
 				      	<?=$post['position']?>
 				      </td>
 				      <td>
-				        <div class="action-btn">
-				          <button class="btn btn-danger btn-sm delete_position ms-2" data-id3="<?=$post['position_id']?>"  data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
-				            <i class="ti ti-trash fs-5"></i> 
-				          </button>
-				        </div>
+				        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+	                <div class="btn-group me-2 mb-2" role="group" aria-label="First group">
+	                  <a href="dashboard.php?page=positions&position_id=<?=$post['position_id']?>" class="btn btn-primary btn-sm btn_ticket_cancel" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Udate Position">
+	                    <i class="ti ti-pencil fs-4"></i>
+	                  </a>
+	                  <button class="btn btn-sm btn-danger btn-sm delete_position" data-id3="<?=$post['position_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Position">
+	                    <i class="ti ti-trash fs-4"></i>
+	                  </button>
+	                </div>
+	              </div>
 				      </td>
 				    </tr>
 	    <?php		}

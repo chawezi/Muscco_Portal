@@ -760,6 +760,20 @@
 		}
 	}
 
+	//update position
+	if(isset($_POST['update_position'])){
+		//print_r($_POST);
+		$update = $con->update('positions', 
+						array('position'=>$con->clean($_POST['position'])), 
+						array('position_id'=>$_POST['id'])
+					);
+		if(!empty($update)){
+			echo "3";
+		}else{
+			echo "4";
+		}
+	}
+
 	//delete position
 	if($action == 'delete_position'){
 		$delete = $con->delete('positions', array('position_id'=>$con->clean($_GET['id'])));

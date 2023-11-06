@@ -305,7 +305,7 @@ function addBranch() {
       getBranches();
     }
   });
-  return false;
+  return false;update_position
 }  
 
 $("#manage-departments").validate({
@@ -358,6 +358,61 @@ function addDepartment() {
         $("#error").delay(6000).fadeOut(function(){});
       }
       getDepartments();
+    }
+  });
+  return false;
+} 
+
+$("#add-position").validate({
+      rules: {
+        position:{required:true}
+      },
+      messages: {
+        position:"Please enter position name"
+      },
+      submitHandler: addPosition  
+});    
+  /* Handling form functionality */
+function addPosition() {    
+  var data = $("#add-position").serialize();         
+  $.ajax({        
+    type : 'POST',
+    url  : '../../settings/sql-master.php',
+    data : data,
+    beforeSend: function(){ 
+      $("#position_error").fadeOut();
+      $("#add_position").html('Saving Positions..');
+      $("#update_position").html('Updating..');
+    },
+    success : function(response){ alert(response);
+      if(response == 1) {                 
+       $("#position_error").fadeIn(1000, function(){            
+          $("#position_error").html('<div class="alert alert-success"> A position has been saved successfully!</div>');
+          $("#add_position").html('Save Position');
+        });
+        $("#position_error").delay(6000).fadeOut(function(){});
+        $("#add-position")[0].reset();
+      } else if(response == 2) {                 
+        $("#position_error").fadeIn(1000, function(){            
+          $("#position_error").html('<div class="alert alert-danger"> Sorry, there was an error saving the position, please try again</div>');
+          $("#add_position").html('Add Position');
+        });
+        $("#position_error").delay(6000).fadeOut(function(){});
+      }
+      if(response == 3) {                 
+       $("#position_error").fadeIn(1000, function(){            
+          $("#position_error").html('<div class="alert alert-success"> A position has been updated successfully!</div>');
+          $("#update_position").html('Update Position');
+        });
+        $("#position_error").delay(6000).fadeOut(function(){});
+      } else if(response == 4) {                 
+        $("#position_error").fadeIn(1000, function(){            
+          $("#position_error").html('<div class="alert alert-danger"> There is nothing to update, please edit first.</div>');
+          $("#update_position").html('Update Position');
+        });
+        $("#position_error").delay(6000).fadeOut(function(){});
+      }
+      getPositions();
     }
   });
   return false;
