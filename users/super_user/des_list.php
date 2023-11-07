@@ -18,27 +18,30 @@
       </div>
     </div>
   </div>
-          <ul class="nav nav-pills p-3 mb-3 rounded align-items-center card flex-row">
-            <li class="nav-item">
-              <h4 class="fw-semibold mb-8">Registered Development Educators (DEs) </h4>
-            </li>
-            <li class="nav-item ms-auto">
-              <a href="dashboard.php?page=add_de" class="btn btn-primary d-flex align-items-center px-3" id="add-notes" title="Add DE">
-               <i class="ti ti-user me-0 me-md-1 fs-4"></i>
-                <span class="d-none d-md-block font-weight-medium fs-3">Add DE</span>
-              </a>
-            </li>
-          </ul>
           <div class="tab-content">
             <div id="note-full-container" class="note-has-grid row">
               <div class="col-md-12 single-note-item all-category note-social">
                 <div class="card card-body">
                   <div class="table-responsive">
+
+                    <div class="d-sm-flex d-block align-items-center justify-content-between mb-9">
+                      <div class="mb-3 mb-sm-0">
+                        <h5 class="card-title fw-semibold">Development Educators (DEs)</h5>
+                        <p class="card-subtitle mb-0">All the registered Development Educators (DEs)</p>
+                      </div>
+                      <div>
+                        <a href="dashboard.php?page=add_de" class="btn btn-primary d-flex align-items-center px-3" id="add-notes" title="Download Report">
+                         <i class="ti ti-user-plus me-0 me-md-1 fs-4"></i>
+                          <span class="d-none d-md-block font-weight-medium fs-3">Add DE</span>
+                        </a>
+                      </div>
+                    </div>
+                    <hr/>
                     <div id="err"></div>
                     <table id="zero_config" class="table search-table align-middle text-nowrap dataTable">
                       <thead class="header-item">
                         <th>
-                          #
+                          
                         </th>
                         <th>DE Name</th>
                         <th>Sponsored By</th>
@@ -51,13 +54,19 @@
                         <?php
                           $saccos = $con->getRows('des a, sacco b', array('where'=>'a.sponsored_by=b.sacco_id','order_by'=>'a.first_name asc'));
                           if(!empty($saccos)){
-                            $i=0;
                             foreach($saccos as $sacco){ 
-                              $i++;
+                              $thumb = $sacco['profile_pic'];
+                              if(empty($thumb)){
+                                $thumb = 'default.jpg';
+                              }
                         ?>
                               <tr class="search-items">
                                 <td>
-                                  <?=$i?>
+                                  <div class="d-flex align-items-center">
+                                      <div class="me-2 pe-1">
+                                        <img src="../../uploads/profiles/<?=$thumb?>" class="rounded-circle" width="40" height="40" alt="">
+                                      </div>
+                                    </div>
                                 </td>
                                 <td>
                                   <div class="d-flex align-items-center">

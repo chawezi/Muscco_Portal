@@ -163,7 +163,7 @@ class MasterClass{
         return $delete?$delete:false;
     }
 
-    public function shortDate($date){
+  public function shortDate($date){
 		$date = date_create($date); return date_format($date,"d/m/y");
 	}
 
@@ -422,9 +422,9 @@ class MasterClass{
 	    // 1 day = 24 hours 
 	    // 24 * 60 * 60 = 86400 seconds
 	    return ceil(abs($diff / 86400))+1;
-    }
+  }
 
-    public function backup($tables = '*'){
+  public function backup($tables = '*'){
 	   $output = "-- database backup - ".date('Y-m-d H:i:s').PHP_EOL;
 	   $output .= "SET NAMES utf8;".PHP_EOL;
 	   $output .= "SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';".PHP_EOL;
@@ -482,7 +482,7 @@ class MasterClass{
 
 	   return $filename;
 	   	
-	 }
+	}
 
 
  private function writeUTF8filename($fn,$c){  /* save as utf8 encoding */

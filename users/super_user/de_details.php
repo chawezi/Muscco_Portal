@@ -122,7 +122,12 @@
                               </select>
                             </div>
                           </div>
-
+                          <div class="col-md-4">
+                            <div class="mb-3">
+                              <label class="control-label">Profile Picture(130x130)</label>
+                                <input type="file" class="form-control" name="file" wfd-id="id60">
+                            </div>
+                          </div>
                           <div class="col-md-4">
                             <div class="mb-3">
                               <label class="control-label">Year of Graduation</label>
@@ -136,6 +141,7 @@
                         <div class="col-12">
                           <div class="d-flex align-items-center justify-content-end mt-4 gap-3">
                             <input type="hidden" name="id" value="<?=$member_id?>">
+                            <input type="hidden" name="pic" value="<?=$member['profile_pic']?>">
                             <button type="submit" class="btn btn-primary px-4" name="update_de" id="update_member">         
                                 Update Details
                             </button>

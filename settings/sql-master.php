@@ -10,6 +10,12 @@
 		$action = $_GET['action'];
 	}
 
+	function checkUsername($username){
+		$get_username = $con->getRows('system_users', 
+							array('where'=>'username="'.$username.'"', 'return_type'=>'single'));
+		return $get_username?$get_username:false;
+	}
+
 	//user login
 	if(isset($_POST['signin'])){
 		$username 		= $con->clean($_POST['username']);
@@ -321,6 +327,47 @@
 	//add des
 	if(isset($_POST['save_de'])){
 		$id = $con->get_random_string_max(60);
+		$profile_picture = "";
+
+		//checks if the username is already in use
+		$get_username = $con->getRows('system_users', 
+							array('where'=>'username="'.$_POST['username'].'"', 'return_type'=>'single'));
+		if(!empty($get_username)){
+			echo "10";
+			exit();
+		}
+
+
+		//checks if the profile picture has been uploaded
+		if(!empty($_FILES['file']['name'])){
+			//upload directory
+	        $fileDir  = "../uploads/profiles/";
+
+	        //allowed file types to upload
+	        $fileTypes = array('.jpeg','.jpg','.png', '.gif'); 
+
+	        //file names
+	        $fileName  = "";
+
+	        $file = $_FILES['file']['name'];
+	        $file_ext= substr($file, strripos($file, '.')); // get file name
+	        $file_basename = substr($file, 0, strripos($file, '.')); // get file extention
+	        $fileName = $_POST['first_name']."_".time(). $file_ext;//renames the file
+
+	        //checks if the file type is valid
+	        if (!in_array(strtolower($file_ext),$fileTypes)) {
+	            echo "8";
+	            exit();
+	        }
+
+	        //if everything is in order upload the picture
+	        $file_temp =$_FILES['file']['tmp_name'];
+
+	        if(move_uploaded_file($file_temp, $fileDir.$fileName)){
+	        	$profile_picture = $fileName;
+	        }
+		}
+
 		$data = array(
 					'first_name'	=> $con->clean($_POST['first_name']),
 					'last_name'	=> $con->clean($_POST['last_name']),
@@ -329,7 +376,8 @@
 					'location'	=> $con->clean($_POST['location']),
 					'de_id'	=> $id,
 					'sponsored_by' => $con->clean($_POST['sponsor']),
-					'graduation_date' => $con->clean($_POST['year'])
+					'graduation_date' => $con->clean($_POST['year']),
+					'profile_pic'	  => $profile_picture	
 				);
 		$save = $con->insert('des', $data);
 		if(!empty($save)){
@@ -349,6 +397,38 @@
 
 	//update de's details
 	if(isset($_POST['update_de'])){
+		$profile_picture = $_POST['pic'];
+		//checks if the profile picture has been uploaded
+		if(!empty($_FILES['file']['name'])){
+			//upload directory
+	        $fileDir  = "../uploads/profiles/";
+
+	        //allowed file types to upload
+	        $fileTypes = array('.jpeg','.jpg','.png', '.gif'); 
+
+	        //file names
+	        $fileName  = "";
+
+	        $file = $_FILES['file']['name'];
+	        $file_ext= substr($file, strripos($file, '.')); // get file name
+	        $file_basename = substr($file, 0, strripos($file, '.')); // get file extention
+	        $fileName = $_POST['first_name']."_".time(). $file_ext;//renames the file
+
+	        //checks if the file type is valid
+	        if (!in_array(strtolower($file_ext),$fileTypes)) {
+	            echo "8";
+	            exit();
+	        }
+
+	        //if everything is in order upload the picture
+	        $file_temp =$_FILES['file']['tmp_name'];
+
+	        if(move_uploaded_file($file_temp, $fileDir.$fileName)){
+	        	$profile_picture = $fileName;
+	        }
+		}
+
+
 		$data = array(
 					'first_name'	=> $con->clean($_POST['first_name']),
 					'last_name'	=> $con->clean($_POST['last_name']),
@@ -356,7 +436,8 @@
 					'email_address'	=> $con->clean($_POST['email']),
 					'location'	=> $con->clean($_POST['location']),
 					'sponsored_by' => $con->clean($_POST['sponsor']),
-					'graduation_date' => $con->clean($_POST['year'])
+					'graduation_date' => $con->clean($_POST['year']),
+					'profile_pic'	  => $profile_picture	
 				);
 		$update = $con->update('des', $data, array('de_id'=>$_POST['id']));
 		if($update){

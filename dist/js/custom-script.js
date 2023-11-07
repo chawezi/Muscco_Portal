@@ -1411,6 +1411,12 @@ function addMember() {
           $("#save_member").html('Save');
         });
         $("#error").delay(6000).fadeOut(function(){});
+      }else if(response == 10){
+        $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-danger"> Sorry, the entered username is already in use, choose a different one!</div>');
+          $("#save_member").html('Save');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
       }
     },
     contentType: false,

@@ -96,6 +96,12 @@
                               </select>
                             </div>
                           </div>
+                          <div class="col-md-4">
+                            <div class="mb-3">
+                              <label class="control-label">Profile Picture(130x130)</label>
+                                <input type="file" class="form-control" name="file" wfd-id="id60">
+                            </div>
+                          </div>
 
                           <div class="col-md-4">
                             <div class="mb-3">
