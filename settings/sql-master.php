@@ -641,9 +641,49 @@
 		$number    = preg_match('@[0-9]@', $password);
 		$specialChars = preg_match('@[^\w]@', $password);
 
+		$logo = '';
+
+		//checks if the profile picture has been uploaded
+		if(!empty($_FILES['file']['name'])){
+			//upload directory
+	        $fileDir  = "../uploads/logos/";
+
+	        //allowed file types to upload
+	        $fileTypes = array('.jpeg','.jpg','.png', '.gif'); 
+
+	        //file names
+	        $fileName  = "";
+
+	        $file = $_FILES['file']['name'];
+	        $file_ext= substr($file, strripos($file, '.')); // get file name
+	        $file_basename = substr($file, 0, strripos($file, '.')); // get file extention
+	        $fileName = $_POST['first_name']."_".time(). $file_ext;//renames the file
+
+	        //checks if the file type is valid
+	        if (!in_array(strtolower($file_ext),$fileTypes)) {
+	            echo "4";
+	            exit();
+	        }
+
+	        //if everything is in order upload the picture
+	        $file_temp =$_FILES['file']['tmp_name'];
+
+	        if(move_uploaded_file($file_temp, $fileDir.$fileName)){
+	        	$logo = $fileName;
+	        }
+		}
+
 		if(!$uppercase || !$lowercase || !$number || strlen($password) < 8 || !$specialChars) {
 		  // tell the user something went wrong
 			echo "3";
+			exit();
+		}
+
+		//checks if the username is already in use
+		$get_username = $con->getRows('system_users', 
+							array('where'=>'username="'.$_POST['username'].'"', 'return_type'=>'single'));
+		if(!empty($get_username)){
+			echo "5";
 			exit();
 		}
 
@@ -664,7 +704,8 @@
 					'male_membership'	=> $con->clean($_POST['male']),
 					'female_membership'	=> $con->clean($_POST['famale']),
 					'youth_membership'	=> $con->clean($_POST['youth']),
-					'other_membership'	=> $con->clean($_POST['other_members'])
+					'other_membership'	=> $con->clean($_POST['other_members']),
+					'logo'				=> $logo
 				);
 		$add_sacco = $con->insert('sacco', $data);
 		if(!empty($add_sacco)){

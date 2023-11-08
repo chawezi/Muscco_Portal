@@ -370,77 +370,7 @@ $("#add-topic").validate({
       return false;
     } 
 
-$("#add-sacco").validate({
-    rules: {
-      name: {required: true},
-      president: {required: true},
-      password: {
-      required: true,
-      minlength: 8
 
-    },
-    re_password: {
-      required: true,
-      equalTo:"#password"
-    },
-    first_name: {required:true},
-    last_name: {required:true},
-    username: {required:true},
-    email_address:{required:true}
-
-    },
-    messages: {
-      name:{required: "Please enter sacco name"},
-      president:{required: "Please enter sacco president"},
-      password:{required: "Please enter the password"},
-      re_password: {required:"Please re enter the password",
-                    equalTo: "Please confirm the password entered"
-    },
-    first_name:"Please enter the first name",
-    last_name:"Please enter the last name",
-    username:"Please enter the username",
-    email_address: "Please enter Sacco's email address"
-    },
-    submitHandler: addSacco  
-  });    
-  /* Handling form functionality */
-function addSacco() {    
-  var data = $("#add-sacco").serialize();        
-  $.ajax({        
-    type : 'POST',
-    url  : '../../settings/sql-master.php',
-    data : data,
-    beforeSend: function(){ 
-      $("#sacco_response").fadeOut();
-      $("#save_sacco").html(' Saving Sacco...');
-    },
-    success : function(response){ //alert(response);
-      if(response == 1) {                 
-        $("#sacco_response").fadeIn(1000, function(){            
-          $("#sacco_response").html('<div class="alert alert-success"> Sacco details have been saved successfuly!</div>');
-          $("#save_sacco").html('Save Sacco');
-          $("#add-sacco")[0].reset();
-        });
-        $("#sacco_response").delay(6000).fadeOut(function(){});
-      } else if(response == 2) {                 
-        $("#sacco_response").fadeIn(1000, function(){            
-          $("#sacco_response").html('<div class="alert alert-danger"> Sorry, there was an error saving the sacco details!</div>');
-          $("#save_sacco").html('Save Sacco');
-        });
-        $("#sacco_response").delay(6000).fadeOut(function(){});
-      }
-      else if(response == 3) {                 
-            $("#sacco_response").fadeIn(1000, function(){            
-              $("#sacco_response").html('<div class="alert alert-danger"> Make sure the password includes an uppercase & lowercase letter, a number,and one special character.</div>');
-              $("#save_sacco").html('Save Sacco');
-            });
-            $("#sacco_response").delay(6000).fadeOut(function(){});
-          }
-    }
-  });
-  return false;
-} 
-/* end  script */
 
 $("#update-sacco").validate({
     rules: {

@@ -50,7 +50,7 @@
     
     <div class="card">
       
-      <form id="add-sacco" name="add-sacco" method="post" action="">
+      <form id="add-sacco" name="add-sacco" method="post" action="" enctype="multipart/form-data">
         <div>
           <div class="card-body">
             <h5>Sacco Info</h5>
@@ -103,7 +103,13 @@
             </div>
             <!--/row-->
             <div class="row">
-              <div class="col-md-12">
+              <div class="col-md-4">
+                <div class="mb-3">
+                  <label class="control-label">Sacco Logo</label>
+                  <input type="file" class="form-control" name="file" wfd-id="id60">
+                </div>
+              </div>
+              <div class="col-md-8">
                 <div class="mb-3">
                   <label class="control-label">Physical Address</label>
                   <input type="text" class="form-control" name="address" wfd-id="id60">
