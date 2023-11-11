@@ -54,7 +54,7 @@
                         <th>Title, Product & Sacco</th>
                         <th>Priority</th>
                         <th>Status</th>
-                        <th>Date</th>
+                        <th>Date Closed</th>
                         <th>Action</th>
                       </thead>
                       <tbody>
@@ -127,7 +127,7 @@
                                   <div class="d-flex align-items-center">
                                     <div class="ms-3">
                                       <div class="user-meta-info">
-                                        <h6 class="user-name mb-0" data-name=""><?=$con->shortDate($ticket['date_opened'])?></h6>
+                                        <h6 class="user-name mb-0" data-name=""><?=$con->shortDate($ticket['date_closed'])?></h6>
                                       </div>
                                     </div>
                                   </div>

@@ -1118,7 +1118,7 @@ function addLeave() {
           $("#error").fadeOut();
           $("#vehicle_request").html('Submitting Request...');
         },
-        success : function(response){ //alert(response);
+        success : function(response){ alert(response);
           if(response == 1) {                 
             $("#error").fadeIn(1000, function(){            
               $("#error").html('<div class="alert alert-success"> Your vehicle request has been submitted successfully!</div>');
