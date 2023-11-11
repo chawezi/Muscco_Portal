@@ -100,9 +100,15 @@
                   <a href="dashboard.php?page=staff_details&staff_id=<?=$member['member_id']?>" class="btn btn-primary btn-sm btn_ticket_cancel" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Udate Details">
                     <i class="ti ti-pencil fs-4"></i>
                   </a>
+                  <?php if($member['member_id'] != $_SESSION['USR_ID']){ ?>
                   <button class="btn btn-sm btn-danger btn-sm delete_staff" data-id3="<?=$member['member_id']?>" data-file="<?=$member['thumb']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete User">
                     <i class="ti ti-trash fs-4"></i>
                   </button>
+                	<?php }else{ ?>
+                	<button class="btn btn-sm btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete User" disabled>
+                    <i class="ti ti-trash fs-4"></i>
+                  </button>
+                	<?php } ?>
                 </div>
               </div>
 			      </td>

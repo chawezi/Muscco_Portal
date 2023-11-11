@@ -110,7 +110,7 @@ $ticket = $con->getRows('tickets a, muscco_members b, products c, ticket_categor
 
                         <tr>
                             <th scope="col" class="bg-primary text-white">Date Posted</th>
-                            <td><?=$ticket['date_opened']?></td>
+                            <td><?=$con->$ticket['date_opened']?></td>
                         </tr>
                         <tr>
                             <th scope="col" class="bg-primary text-white">Ticket Title</th>

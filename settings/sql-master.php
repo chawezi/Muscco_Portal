@@ -522,7 +522,7 @@
 		}
 	}
 
-	//update staff
+	//update staff by the admin
 	if(isset($_POST['update_staff'])){
 		$profile_picture = '';
 		if(!empty($_POST['current_image'])){
@@ -571,6 +571,24 @@
 				'band_id'		   => $con->clean($_POST['band']),
 				'branch'		   => $con->clean($_POST['branch']),
 				'thumb'			   => $profile_picture
+			);
+		$save_staff = $con->update('muscco_members', $data, array('muscco_member_id'=>$con->clean($_POST['id'])));
+		if(!empty($save_staff)){
+			echo "1";
+		}else{
+			echo "9";
+		}
+	}
+
+	//update staff by the admin
+	if(isset($_POST['update_user_details'])){
+
+		$data = array(
+				'first_name'	   => $con->clean($_POST['first_name']),
+				'last_name'		   => $con->clean($_POST['last_name']),
+				'email_address'	   => $con->clean($_POST['email']),
+				'phone_number'	   => $con->clean($_POST['phone']),
+				'dob'			   => $con->clean($_POST['dob']),
 			);
 		$save_staff = $con->update('muscco_members', $data, array('muscco_member_id'=>$con->clean($_POST['id'])));
 		if(!empty($save_staff)){

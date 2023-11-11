@@ -5,7 +5,8 @@ $action = '';
 if(isset($_GET['action'])){
   $action = $_GET['action'];
 }
-$user_name = '';
+$user_name = ''; 
+//print_r($_GET);
 
 if($action == "show_responses"){ 
   $responses = $con->getRows('ticket_response', array('where'=>'ticket_id="'.$_GET['id'].'"', 'order_by'=>'date desc'));
@@ -13,7 +14,7 @@ if($action == "show_responses"){
     echo'<ul class="chat-users"  data-simplebar>';
     foreach ($responses as $response) { 
       $check_user = $con->getRows('system_users', array('where'=>'member_id="'.$response['member_id'].'"', 'return_type'=>'single'));
-      if($check_user['user_role'] == 0){
+      if($check_user['user_role'] == 0 || $check_user['user_role'] == 2){
         //gets the super/muscco admin detailes
         $user_name = $con->getRows('muscco_members', array('where'=>'muscco_member_id="'.$response['member_id'].'"','return_type'=>'single'));
       }elseif($check_user['user_role'] == 1){

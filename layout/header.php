@@ -36,6 +36,8 @@
   }else if($_SESSION['USR_SESS'] != 'VAL'){
     header('Location:../../sign-out.php');
   }
+
+  //print_r("Hello there".$_SESSION['USR_OF']);
   
   
 ?>
