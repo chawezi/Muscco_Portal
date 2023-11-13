@@ -510,7 +510,17 @@
             <span class="hide-menu">FAQs</span>
           </a>
         </li>
+        <?php if($_SESSION['USR_OF'] == 999){ ?>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="dashboard.php?page=registered_des" aria-expanded="false">
+            <span>
+              <i class="ti ti-users"></i>
+            </span>
+            <span class="hide-menu">Registered DEs</span>
+          </a>
+        </li>
         <?php
+          }
           if(in_array(16, $permission)){
             ?>
             <li class="sidebar-item">
