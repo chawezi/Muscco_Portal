@@ -186,7 +186,7 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                                     </div>
                                      <div class="col-12">
                                       <div class="d-flex align-items-center justify-content-end gap-3">
-                                        <input type="hidden" name="user_id" value="<?=$_SESSION['USR_ID']?>">
+                                        <input type="hidden" name="user_id" value="<?=$_SESSION['USR_ID']?>">                                       
                                         <input type="hidden" name="request_id" value="<?=$request_id?>">
                                         <button type="submit" name="liquidate" id="vehicle_request"  class="btn btn-primary ">Liquidate</button>
                                       </div>

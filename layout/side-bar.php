@@ -477,7 +477,17 @@
             <span class="hide-menu">Discussion Area </span>
           </a>
         </li>
-        <?php if($_SESSION['USR_TYP'] != 4){ ?>
+        <?php if($_SESSION['USR_OF'] == 0){ ?>
+        <li class="sidebar-item">
+          <a class="sidebar-link" href="dashboard.php?page=staff_profile" aria-expanded="false">
+            <span>
+              <i class="ti ti-users"></i>
+            </span>
+            <span class="hide-menu">Staff Profiles </span>
+          </a>
+        </li>
+
+        <?php } if($_SESSION['USR_TYP'] != 4){ ?>
         <li class="sidebar-item">
           <a class="sidebar-link justify-content-between" href="dashboard.php?page=notifications" aria-expanded="false">
 

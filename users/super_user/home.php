@@ -114,6 +114,36 @@
         </div>
       </div>
     </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title fw-semibold">Muscco Staff Members</h5>
+      <p class="card-subtitle">Tips for Following Local Artists</p>
+      <div class="overflow-auto mt-4" data-simplebar>
+        <div class="hstack gap-9">
+          <?php 
+            $users = $con->getRows('muscco_members', array('order_by'=>'first_name'));
+            if(!empty($users)){
+              $thumb = 'default.jpg';
+              foreach ($users as $user) {
+                if(!empty($user['thumb'])){
+                  $thumb = $user['thumb'];
+                }
+                ?>
+                <a href="dashboard.php?page=staff_profile&user_id=<?=$user['muscco_member_id']?>" class="text-center flex-shrink-0 ">
+                  <div class="border border-2 border-primary rounded-circle hover-img">
+                    <img src="../../uploads/profiles/<?=$thumb?>" class="rounded-circle img-fluid m-1" alt="art" width="55" />
+                  </div>
+                  <span class="d-block fs-3 mt-1  text-dark"><?=ucwords($user['first_name'])?></span>
+                </a>
+                
+          <?php }
+            }
+          ?>
+          
+        </div>
+      </div>
+    </div>
+  </div> 
   <div class="col-lg-5">
     <div class="card w-100">
       <div class="card-body">
