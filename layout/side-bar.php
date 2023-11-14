@@ -511,7 +511,7 @@
           </a>
 
         </li>
-        <?php } ?>
+        <?php } if($_SESSION['USR_OF'] != 999){ ?>
         <li class="sidebar-item">
           <a class="sidebar-link" href="dashboard.php?page=faqs" aria-expanded="false">
             <span>
@@ -520,7 +520,7 @@
             <span class="hide-menu">FAQs</span>
           </a>
         </li>
-        <?php if($_SESSION['USR_OF'] == 999){ ?>
+        <?php } if($_SESSION['USR_OF'] == 999){ ?>
         <li class="sidebar-item">
           <a class="sidebar-link" href="dashboard.php?page=registered_des" aria-expanded="false">
             <span>

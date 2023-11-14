@@ -75,24 +75,34 @@ if($action == 'get_my_topics'){
 }elseif($action == 'get_comments'){ 
   $id = $_GET['id'];
   $username ='';
+  $thumb = 'default.jpg';
   $comments = $con->getRows('discussion_replies', array('where'=>'topic_id="'.$id.'"', 'order_by'=>'date_replied desc'));
   if(!empty($comments)){
     foreach ($comments as $comment) {
-      // check the user
+      // check the user      
       if($comment['member_of'] == 0){
         $user = $con->getRows('muscco_members', array('where'=>'muscco_member_id="'.$comment['replied_by'].'"','return_type'=>'single'));
         $username = ucwords($user['first_name'])." ".ucwords($user['last_name']);
+        if(!empty($user['thumb'])){
+          $thumb = $user['thumb'];
+        }
       }elseif($comment['member_of'] == 999){
         $user = $con->getRows('des', array('where'=>'de_id="'.$comment['replied_by'].'"','return_type'=>'single'));
         $username = ucwords($user['first_name'])." ".ucwords($user['last_name']);
+        if(!empty($user['profile_pic'])){
+          $thumb = $user['profile_pic'];
+        }
       }
       else{
         $user = $con->getRows('sacco_members', array('where'=>'sacco_member_id="'.$comment['replied_by'].'"','return_type'=>'single'));
         $username = ucwords($user['first_name'])." ".ucwords($user['last_name']);
+        if(!empty($user['profile_pic'])){
+          $thumb = $user['profile_pic'];
+        }
       } ?>
       <div class="p-4 rounded-2 bg-light mb-3">
         <div class="d-flex align-items-center gap-3">
-          <i class="ti ti-user-circle fs-4"></i> 
+          <img src="../../uploads/profiles/<?=$thumb?>" alt="user1" width="48" height="48" class="rounded-circle" />
           <h6 class="fw-semibold mb-0 fs-4"><?=$username;?></h6>
           <span class="fs-2"><span class="p-1 bg-muted rounded-circle d-inline-block"></span> <?=$con->DTT($comment['date_replied'])?></span>
         </div>

@@ -6,200 +6,74 @@
         <div class="">
           <i class="ti ti-user-circle text-primary" class="rounded-circle m-1" style="font-size: 3em;"></i>
         </div>
-        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary"> 3 <span class="visually-hidden">unread messages</span>
-        </span>
+        
       </div>
       <div>
         <h3 class="fw-semibold">Hi, <span class="text-dark"><?=$_SESSION['USR_NME']?></span>
         </h3>
         <span>Cheers, and happy activities - <?=date('M d Y')?></span>
       </div>
-    </div>
-    <div class="owl-carousel counter-carousel owl-theme">
-            <div class="item">
-              <div class="card border-0 zoom-in bg-light-primary shadow-none">
-                <div class="card-body">
-                  <div class="text-center">
-                    <i class="ti ti-archive text-primary fs-6"></i>
-                    <p class="fw-semibold fs-3 text-primary mb-1"> SACCOs </p>
-                    <h5 class="fw-semibold text-primary mb-0">
-                      <?php $saccos = $con->getRows('sacco', array('return_type'=>'count')); echo $saccos?$saccos:0;  ?>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="card border-0 zoom-in bg-light-warning shadow-none">
-                <div class="card-body">
-                  <div class="text-center">
-                    <i class="ti ti-file-invoice text-warning fs-6"></i>
-                    <p class="fw-semibold fs-3 text-warning mb-1">Invoices</p>
-                    <h5 class="fw-semibold text-warning mb-0">
-                      <?php $invoices = $con->getRows('invoices', array('return_type'=>'count')); echo $invoices?$invoices:0;  ?>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="card border-0 zoom-in bg-light-info shadow-none">
-                <div class="card-body">
-                  <div class="text-center">
-                    <i class="ti ti-calendar text-info fs-6"></i>
-                    <p class="fw-semibold fs-3 text-info mb-1">Events</p>
-                    <h5 class="fw-semibold text-info mb-0">
-                      <?php $events = $con->getRows('events', array('return_type'=>'count')); echo $events?$events:0;  ?>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="card border-0 zoom-in bg-light-danger shadow-none">
-                <div class="card-body">
-                  <div class="text-center">
-                    <i class="ti ti-info-circle text-danger fs-6"></i>
-                    <p class="fw-semibold fs-3 text-danger mb-1">FAQs</p>
-                    <h5 class="fw-semibold text-danger mb-0">
-                      <?php $faqs = $con->getRows('faqs', array('return_type'=>'count')); echo $faqs?$faqs:0;  ?>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="card border-0 zoom-in bg-light-success shadow-none">
-                <div class="card-body">
-                  <div class="text-center">
-                    <i class="ti ti-bell-ringing text-success fs-6"></i>
-                    <p class="fw-semibold fs-3 text-success mb-1">Notifications</p>
-                    <h5 class="fw-semibold text-success mb-0">
-                      <?php $notifications = $con->getRows('notifications', array('return_type'=>'count')); echo $notifications?$notifications:0;  ?>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item">
-              <div class="card border-0 zoom-in bg-light-info shadow-none">
-                <div class="card-body">
-                  <div class="text-center">
-                    <i class="ti ti-download text-info fs-6"></i>
-                    <p class="fw-semibold fs-3 text-info mb-1">Documents</p>
-                    <h5 class="fw-semibold text-info mb-0">
-                      <?php $documents = $con->getRows('documents', array('return_type'=>'count')); echo $documents?$documents:0;  ?>
-                    </h5>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-    
+    </div>    
   </div>
-  <div class="card w-100 bg-light-info overflow-hidden shadow-none">
-      <div class="card-body py-3">
-        <div class="row justify-content-between align-items-center">
-          <div class="col-sm-7">
-            <p class="mb-9">
-              If you experience any problem don't hesitate to contact helpdesk by creating a ticket outlining your issue.
-            </p>
-            <a href="dashboard.php?page=help_desk" class="btn btn-primary">Contact Helpdesk</a>
-          </div>
-          <div class="col-sm-5">
-            <div class="position-relative mb-n7 text-end">
-              <img src="../../dist/images/backgrounds/welcome-bg2.png" alt="" class="img-fluid">
+  <div class="row">
+    <div class="col-xl-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold">Follow Your Fellow DEs</h5>
+          <p class="card-subtitle">Below is a list of registered DEs</p>
+          <div class="overflow-auto mt-4" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: scroll hidden;"><div class="simplebar-content" style="padding: 0px;">
+            <div class="hstack gap-9">
+              <?php 
+                $users = $con->getRows('des', array('order_by'=>'first_name'));
+                if(!empty($users)){
+                  $thumb = 'default.jpg';
+                  foreach ($users as $user) {
+                    if(!empty($user['profile_pic'])){
+                      $thumb = $user['profile_pic'];
+                    }
+                    ?>
+              <a href="dashboard.php?page=registered_des&user_id=<?=$user['de_id']?>" class="text-center flex-shrink-0 ">
+                <div class="border border-2 border-primary rounded-circle hover-img">
+                  <img src="../../uploads/profiles/<?=$thumb?>" class="rounded-circle img-fluid m-1"  width="55">
+                </div>
+                <span class="d-block fs-3 mt-1  text-dark"><?=ucwords($user['first_name'])." ".ucwords($user['last_name'])?></span>
+              </a>
+              <?php }
+                }
+              ?>
+            </div>
+          </div></div></div></div><div class="simplebar-placeholder" style="width: auto; height: 92px;"></div></div><div class="simplebar-track simplebar-horizontal" style="visibility: visible;"><div class="simplebar-scrollbar" style="width: 46px; transform: translate3d(0px, 0px, 0px); display: block;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; display: none;"></div></div></div>
+        </div>
+      </div>           
+    </div>
+    <!-- music sidebar -->
+    <div class="col-xl-4">
+      <div class="row">
+        <div class="col-sm-6 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body">
+              <div class="p-2 bg-light-primary rounded-2 d-inline-block mb-3">
+                <i class="ti ti-file-description fs-5 text-success img-fluid" width="24" height="24"></i>
+              </div>
+              
+              <h4 class="mb-1 fw-semibold d-flex align-content-center"> <?php $documents = $con->getRows('documents', array('where'=>'access_rights=2','return_type'=>'count')); echo $documents?$documents:0;  ?></h4>
+              <p class="mb-0">Documents</p>
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  <div class="col-lg-5">
-    <div class="card w-100">
-      <div class="card-body">
-        <h5 class="card-title fw-semibold">Discussion Topics</h5>
-        <p class="card-subtitle">Recent topics posted for discussions.</p>
-        <?php 
-          $discussions = $con->getRows('discussions', array('order_by'=>'date_posted desc', 'limit'=>'3')); 
-          if(!empty($discussions)){
-            foreach ($discussions as $dis) { ?>
-              <div class="mt-4 pb-3 border-bottom">
-                <div class="d-flex align-items-center">
-                  <span class="fs-3 ms-auto"><?=$con->shortDate($dis['date_posted'])?></span>
-                </div>
-                <h6 class="mt-3"><?=$dis['topic']?></h6>
-                <span class="fs-3 lh-sm"><?=$dis['description']?></span>
-                <div class="hstack gap-3 mt-3">
-                  <a href="dashboard.php?page=open_topic&topic_id=<?=$dis['topic_id']?>" class="fs-3 text-bodycolor d-flex align-items-center">
-                    <i class="ti ti-message-dots fs-6 text-primary me-2 d-flex"></i> 
-                    <?php $replies = $con->getRows('discussion_replies', array('where'=>'topic_id="'.$dis['topic_id'].'"','return_type'=>'count')); echo $replies?$replies:0;  ?> Commets </a>
-                </div>
+        <div class="col-sm-6 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body">
+              <div class="p-2 bg-light-info rounded-2 d-inline-block mb-3">
+                <i class="ti ti-calendar fs-5 text-success img-fluid" width="24" height="24"></i>
               </div>
-        <?php }
-          }
-        ?>
-        
-
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-7 d-flex align-items-stretch">
-    <div class="card w-100">
-      <div class="card-body">
-        <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
-          <div class="mb-3 mb-sm-0">
-            <h5 class="card-title fw-semibold">System Notifications</h5>
-            <p class="card-subtitle mb-0">Notifications generated by the system</p>
+              
+              <h4 class="mb-1 fw-semibold d-flex align-content-center"><?php $events = $con->getRows('events', array('where'=>'event_permision=2','return_type'=>'count')); echo $events?$events:0;  ?></h4>
+              <p class="mb-0">Events</p>
+            </div>
           </div>
         </div>
-        <div class="table-responsive">
-          <table class="table align-middle mb-0">
-              <thead class="header-item">
-                <th>
-                  #
-                </th>
-                <th>Subject & Message</th>
-                <th>Date</th>
-              </thead>
-              <tbody>
-                <?php
-                  $notifications = $con->getRows('notifications', array('where'=>'received_by="'.$_SESSION['USR_ID'].'"','order_by'=>'date desc', 'limit'=>'5'));
-                  if(!empty($notifications)){
-                    $i=0;
-                    foreach($notifications as $note){ 
-                      $i++;
-                ?>
-                      <tr class="search-items">
-                        <td>
-                          <?=$i?>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <div class="ms-3">
-                              <div class="user-meta-info">
-                                <h6 class="user-name mb-0" data-name=""><?=$note['subject']?></h6>
-                                <span class="usr-email-addr"><?=$note['message']?></span>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="d-flex align-items-center">
-                            <div class="ms-3">
-                              <div class="user-meta-info">
-                                <h6 class="user-name mb-0" data-name=""><?=$con->shortDate($note['date'])?></h6>
-                              </div>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                <?php }
-                  }
-                ?>
-              </tbody>
-            </table>
-        </div>
-      </div>
+      </div>           
     </div>
   </div>
 </div>

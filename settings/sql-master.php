@@ -601,6 +601,7 @@
 	//update profile picture
 	if(isset($_POST['update_profile_picture'])){
 		$id = $con->clean($_POST['id']);
+		$old_pic = $_POST['pic'];
 
 		//upload directory
         $fileDir  = "../uploads/profiles/";
@@ -627,9 +628,20 @@
         $file_temp =$_FILES['file']['tmp_name'];
 
         if(move_uploaded_file($file_temp, $fileDir.$fileName)){
-        	$update = $con->update('muscco_members', array('thumb'=>$fileName), array('muscco_member_id'=>$id));
+        	$update = '';
+        	if($_SESSION['USR_OF'] == 0){
+        		$update = $con->update('muscco_members', array('thumb'=>$fileName), array('muscco_member_id'=>$id));
+        	}else if($_SESSION['USR_OF'] == 999){
+        		$update = $con->update('des', array('profile_pic'=>$fileName), array('de_id'=>$id));
+        	}else{
+        		$update = $con->update('sacco_members', array('profile_pic'=>$fileName), array('sacco_member_id'=>$id));
+        	}
+        	
         	if(!empty($update)){
         		echo "1";
+        		if(!empty($old_pic)){
+        			unlink('../uploads/profiles/'.$old_pic);
+        		}
         	}else{
         		echo "2";
         	}

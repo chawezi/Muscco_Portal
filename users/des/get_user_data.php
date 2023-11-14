@@ -13,9 +13,9 @@
 
 <?php if(isset($_GET['action']) && $_GET['action']=='get_profile'){ 
 		$thumb = "default.jpg";
-    $get_thumb = $con->getRows('muscco_members', array('where'=>'muscco_member_id="'.$_SESSION['USR_ID'].'"', 'return_type'=>'single'));
+    $get_thumb = $con->getRows('des', array('where'=>'de_id="'.$_SESSION['USR_ID'].'"', 'return_type'=>'single'));
     if(!empty($get_thumb)){
-      $thumb = $get_thumb['thumb'];
+      $thumb = $get_thumb['profile_pic'];
     }
 
 	?>

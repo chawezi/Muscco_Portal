@@ -18,6 +18,7 @@
       </div>
     </div>
   </div>
+
   <div class="tab-content">
     <div id="note-full-container" class="note-has-grid row">
       <div class="col-md-12 single-note-item all-category note-social">
@@ -99,11 +100,11 @@
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                           <div class="btn-group me-2 mb-2" role="group" aria-label="First group">
                             <?php if(!empty($event['event_attachment'])){?>
-                            <a href="../../uploads/event/<?=$event['event_attachment']?>"  class="btn btn-primary btn-sm btn_event_cancel" data-id3="<?=$event['event_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Attachment">
+                            <a href="download-file.php?dir=../../uploads/event/&file=<?=$event['event_attachment']?>"  class="btn btn-primary btn-sm" data-id3="<?=$event['event_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Attachment">
                               <i class="ti ti-download fs-4"></i>
                             </a>
                             <?php }else{ ?>
-                            <button  class="btn btn-primary btn-sm btn_event_cancel" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="No Attachment">
+                            <button  class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="No Attachment">
                               <i class="ti ti-download-off fs-4"></i> 
                             </button>
                             <?php } ?>

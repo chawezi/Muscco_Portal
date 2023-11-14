@@ -25,15 +25,6 @@
           <div class="d-sm-flex d-block align-items-center justify-content-between mb-7">
             <div class="mb-3 mb-sm-0">
               <h5 class="card-title fw-semibold">Discussion Topics</h5>
-              <p class="card-subtitle mb-0">Topics posted for discussions, to add your comment click on view button</p>
-            </div>
-            <div>
-              <div class="btn-group mb-2">
-                <a href="dashboard.php?page=add_topic" class="btn btn-primary">
-                  Add New Topic
-                </a>
-                
-              </div>
             </div>
           </div>
           <div class="table-responsive">
