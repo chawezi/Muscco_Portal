@@ -82,7 +82,7 @@
                               </tr>
                                 <?php    }
                             }else{
-                              echo'<tr><td colspan="3"><div class="alert alert-warning"> There are no records of this employee entitlement. </div></td></tr>';
+                              echo'<tr><td colspan="5"><div class="alert alert-warning"> There are no records of this employee entitlement. </div></td></tr>';
                             }
                             ?>
                             

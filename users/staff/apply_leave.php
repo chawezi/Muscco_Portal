@@ -130,7 +130,7 @@
 
     <div class="offcanvas offcanvas-start user-chat-box" tabindex="-1" id="chat-sidebar" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel"> Help Desk </h5>
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel"> Leave </h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <?php include('../../layout/leave-menu.php'); ?>

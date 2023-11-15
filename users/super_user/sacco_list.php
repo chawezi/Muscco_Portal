@@ -53,14 +53,22 @@
                 <?php
                   $saccos = $con->getRows('sacco', array('order_by'=>'sacco_name asc'));
                   if(!empty($saccos)){
-                    $i=0;
                     foreach($saccos as $sacco){ 
-                      $i++;
+                      
+                      $logo = $sacco['logo'];
+                      if(empty($logo)){
+                        $logo = 'default.jpg';
+                      }
                 ?>
                       <tr class="search-items">
                         <td>
-                          <?=$i?>
+                          <div class="d-flex align-items-center">
+                            <div class="me-2 pe-1">
+                              <img src="../../uploads/logos/<?=$logo?>" class="rounded-circle" width="40" height="40" alt="">
+                            </div>
+                          </div>
                         </td>
+
                         <td>
                           <div class="d-flex align-items-center">
                             <div class="ms-3">

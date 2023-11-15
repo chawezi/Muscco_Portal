@@ -44,7 +44,7 @@
             <div class="card-body">
                <div class="position-relative">
                   <div class="position-relative">
-                    <div class="chat-box p-9" style="height: calc(100vh - 428px)" data-simplebar>
+                    <div class="chat-box p-9" style="height: calc(150vh - 428px)" data-simplebar>
                       <div class="chat-list chat active-chat" data-user-id="1">
                         <div class="hstack align-items-start mb-7 pb-1 align-items-center justify-content-between">
                           <div class="d-flex align-items-center gap-3">
