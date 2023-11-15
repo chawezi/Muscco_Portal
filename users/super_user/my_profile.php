@@ -99,6 +99,7 @@
                   <input type="file" class="form-control js--animations mr-1" name="file">
                   <span class="input-group-btn" style="margin-left: 5px;">
                     <input type="hidden" name="id" value="<?=$member_id?>">
+                    <input type="hidden" name="pic" value="<?=$member['thumb']?>">
                     <button class="btn btn-primary js--triggerAnimation" type="submit" name="update_profile_picture" id="update_profile">
                       Upload
                     </button>

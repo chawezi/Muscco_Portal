@@ -52,8 +52,8 @@
         <div class="col-sm-6 d-flex align-items-stretch">
           <div class="card w-100">
             <div class="card-body">
-              <div class="p-2 bg-light-primary rounded-2 d-inline-block mb-3">
-                <i class="ti ti-file-description fs-5 text-success img-fluid" width="24" height="24"></i>
+              <div class="p-2 rounded-2 d-inline-block mb-3">
+                <img src="http://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-briefcase.svg" width="50" height="50"  alt="">
               </div>
               
               <h4 class="mb-1 fw-semibold d-flex align-content-center"> <?php $documents = $con->getRows('documents', array('where'=>'access_rights=2','return_type'=>'count')); echo $documents?$documents:0;  ?></h4>
@@ -64,12 +64,12 @@
         <div class="col-sm-6 d-flex align-items-stretch">
           <div class="card w-100">
             <div class="card-body">
-              <div class="p-2 bg-light-info rounded-2 d-inline-block mb-3">
-                <i class="ti ti-calendar fs-5 text-success img-fluid" width="24" height="24"></i>
+              <div class="p-2 rounded-2 d-inline-block mb-3">
+               <img src="http://demos.adminmart.com/premium/bootstrap/modernize-bootstrap/package/dist/images/svgs/icon-favorites.svg" width="50" height="50"  alt="">
               </div>
               
-              <h4 class="mb-1 fw-semibold d-flex align-content-center"><?php $events = $con->getRows('events', array('where'=>'event_permision=2','return_type'=>'count')); echo $events?$events:0;  ?></h4>
-              <p class="mb-0">Events</p>
+              <h4 class="mb-1 fw-semibold d-flex align-content-center"><?php $events = $con->getRows('events', array('where'=>'event_permision=2 and event_status=0','return_type'=>'count')); echo $events?$events:0;  ?></h4>
+              <p class="mb-0">Upcoming Events</p>
             </div>
           </div>
         </div>

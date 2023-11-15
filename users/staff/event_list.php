@@ -103,9 +103,9 @@
                         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                           <div class="btn-group me-2 mb-2" role="group" aria-label="First group">
                             <?php if(!empty($event['event_attachment'])){?>
-                            <button  class="btn btn-primary btn-sm btn_event_cancel" data-id3="<?=$event['event_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Attachment">
+                            <a href="download-file.php?dir=../../uploads/event/&file=<?=$event['event_attachment']?>"  class="btn btn-primary btn-sm" data-id3="<?=$event['event_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Attachment">
                               <i class="ti ti-download fs-4"></i>
-                            </button>
+                            </a>
                             <?php }else{ ?>
                             <button  class="btn btn-danger btn-sm btn_event_cancel" data-id3="<?=$event['event_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="No Attachment">
                               <i class="ti ti-download-off fs-4"></i>
