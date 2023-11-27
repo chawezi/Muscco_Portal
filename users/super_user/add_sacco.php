@@ -125,13 +125,13 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label>Assets</label>
-                  <input type="number" class="form-control" name="assets" wfd-id="id63">
+                  <input type="number" min="0" value="0" class="form-control" name="assets" wfd-id="id63">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
                   <label>Shares</label>
-                  <input type="number" class="form-control" name="shares" wfd-id="id64">
+                  <input type="number" min="0" value="0" class="form-control" name="shares" wfd-id="id64">
                 </div>
               </div>
             </div>
@@ -139,20 +139,20 @@
               <div class="col-md-4">
                 <div class="mb-3">
                   <label>Profits</label>
-                  <input type="number" class="form-control" name="profits" wfd-id="id64">
+                  <input type="number" min="0" value="0" class="form-control" name="profits" wfd-id="id64">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="mb-3">
                   <label>Deposits</label>
-                  <input type="number" class="form-control" name="deposits" wfd-id="id64">
+                  <input type="number" min="0" value="0" class="form-control" name="deposits" wfd-id="id64">
                 </div>
               </div>
               <!--/span-->
               <div class="col-md-4">
                 <div class="mb-3">
                   <label>Loans</label>
-                  <input type="number" class="form-control" name="loans" wfd-id="id65">
+                  <input type="number" min="0" value="0" class="form-control" name="loans" wfd-id="id65">
                 </div>
               </div>
               <!--/span-->
@@ -168,13 +168,13 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label>Male Membership</label>
-                  <input type="number" class="form-control" name="male" wfd-id="id63">
+                  <input type="number" min="0" value="0" class="form-control" name="male" wfd-id="id63">
                 </div>
               </div>
               <div class="col-md-6">
                 <div class="mb-3">
                   <label>Female</label>
-                  <input type="number" class="form-control" name="famale"  wfd-id="id64">
+                  <input type="number" min="0" value="0" class="form-control" name="famale"  wfd-id="id64">
                 </div>
               </div>
             </div>
@@ -182,14 +182,14 @@
               <div class="col-md-6">
                 <div class="mb-3">
                   <label>Youth Membership</label>
-                  <input type="number" class="form-control" name="youth" wfd-id="id64">
+                  <input type="number" min="0" value="0" class="form-control" name="youth" wfd-id="id64">
                 </div>
               </div>
               <!--/span-->
               <div class="col-md-6">
                 <div class="mb-3">
                   <label>Other Membership</label>
-                  <input type="number" class="form-control" name="other_members" wfd-id="id65">
+                  <input type="number" min="0" value="0" class="form-control" name="other_members" wfd-id="id65">
                 </div>
               </div>
               <!--/span-->
