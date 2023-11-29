@@ -361,7 +361,129 @@ function addDepartment() {
     }
   });
   return false;
-}   
+}  
+
+
+$("#update-sacco").validate({
+    rules: {
+      name: {required: true},
+      president: {required: true},
+    },
+    messages: {
+      name:{required: "Please enter sacco name"},
+      president:{required: "Please enter sacco president"},
+    },
+    submitHandler: updateSacco  
+  });    
+  /* Handling form functionality */
+function updateSacco() {    
+  var data = $("#update-sacco").serialize();        
+  $.ajax({        
+    type : 'POST',
+    url  : '../../settings/sql-master.php',
+    data : data,
+    beforeSend: function(){ 
+      $("#sacco_response").fadeOut();
+      $("#update_sacco").html(' Updating Sacco...');
+    },
+    success : function(response){ //alert(response);
+      if(response == 1) {                 
+        $("#sacco_response").fadeIn(1000, function(){            
+          $("#sacco_response").html('<div class="alert alert-success"> Sacco details have been updated successfuly!</div>');
+          $("#update_sacco").html('Update Sacco');
+        });
+        $("#sacco_response").delay(6000).fadeOut(function(){});
+      } else if(response == 2) {                 
+        $("#sacco_response").fadeIn(1000, function(){            
+          $("#sacco_response").html('<div class="alert alert-danger"> Sorry, either there was an error or there is no new information to update!</div>');
+          $("#update_sacco").html('Update Sacco');
+        });
+        $("#sacco_response").delay(6000).fadeOut(function(){});
+      }
+    }
+  });
+  return false;
+} 
+/* end  script */
+
+$("#update-assets").validate({
+  rules: {
+    name: {required: true},
+    president: {required: true},
+  },
+  messages: {
+    name:{required: "Please enter sacco name"},
+    president:{required: "Please enter sacco president"},
+  },
+  submitHandler: updateAssets  
+});    
+/* Handling form functionality */
+function updateAssets() {    
+  var data = $("#update-assets").serialize();        
+  $.ajax({        
+    type : 'POST',
+    url  : '../../settings/sql-master.php',
+    data : data,
+    beforeSend: function(){ 
+      $("#assets_response").fadeOut();
+      $("#update_assets").html(' Updating Sacco...');
+    },
+    success : function(response){ //alert(response);
+      if(response == 1) {                 
+        $("#assets_response").fadeIn(1000, function(){            
+          $("#assets_response").html('<div class="alert alert-success"> Sacco details have been updated successfuly!</div>');
+          $("#update_assets").html('Update Details');
+        });
+        $("#assets_response").delay(6000).fadeOut(function(){});
+      } else if(response == 2) {                 
+        $("#assets_response").fadeIn(1000, function(){            
+          $("#assets_response").html('<div class="alert alert-danger"> Sorry, either there was an error or there is no new information to update!</div>');
+          $("#update_assets").html('Update Details');
+        });
+        $("#assets_response").delay(6000).fadeOut(function(){});
+      }
+    }
+  });
+  return false;
+} 
+
+
+$("#update-membership").validate({
+  rules: {
+  },
+  messages: {
+  },
+  submitHandler: updateMembership  
+});    
+/* Handling form functionality */
+function updateMembership() {    
+  var data = $("#update-membership").serialize();        
+  $.ajax({        
+    type : 'POST',
+    url  : '../../settings/sql-master.php',
+    data : data,
+    beforeSend: function(){ 
+      $("#member_response").fadeOut();
+      $("#update_member").html(' Updating Sacco...');
+    },
+    success : function(response){ //alert(response);
+      if(response == 1) {                 
+        $("#member_response").fadeIn(1000, function(){            
+          $("#member_response").html('<div class="alert alert-success"> Sacco details have been updated successfuly!</div>');
+          $("#update_member").html('Update Details');
+        });
+        $("#member_response").delay(6000).fadeOut(function(){});
+      } else if(response == 2) {                 
+        $("#member_response").fadeIn(1000, function(){            
+          $("#member_response").html('<div class="alert alert-danger"> Sorry, either there was an error or there is no new information to update!</div>');
+          $("#update_member").html('Update Details');
+        });
+        $("#member_response").delay(6000).fadeOut(function(){});
+      }
+    }
+  });
+  return false;
+} 
 
 $("#add-statement").validate({
       rules: {

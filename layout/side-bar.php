@@ -220,13 +220,57 @@
             </ul>
           </li>
           <li class="sidebar-item">
-            <a class="sidebar-link sidebar-link" href="dashboard.php?page=settings" aria-expanded="false">
-              <span class="rounded-3">
+            <a class="sidebar-link has-arrow" href="#" aria-expanded="false">
+              <span class="d-flex">
                 <i class="ti ti-settings"></i>
               </span>
               <span class="hide-menu">Maintenance</span>
             </a>
-          </li>
+            <ul aria-expanded="false" class="collapse first-level">
+              <li class="sidebar-item">
+                <a href="dashboard.php?page=departments" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">Departments</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="dashboard.php?page=positions" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">Positions</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="dashboard.php?page=sacco_info" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">Sacco Information</span>
+                </a>
+              </li>
+              <li class="sidebar-item">
+                <a href="dashboard.php?page=asset_management" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">Assets</span>
+                </a>
+              </li> 
+              <li class="sidebar-item">
+                <a href="dashboard.php?page=membership" class="sidebar-link">
+                  <div class="round-16 d-flex align-items-center justify-content-center">
+                    <i class="ti ti-circle"></i>
+                  </div>
+                  <span class="hide-menu">Membership</span>
+                </a>
+              </li> 
+                           
+
+            </ul>
+          </li>          
         <?php
         } elseif ($_SESSION['USR_TYP'] == 2) {  ?>
           <li class="sidebar-item">

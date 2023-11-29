@@ -5,6 +5,8 @@
   }
 
   $member = $con->getRows('sacco_members a, system_users b', array('where'=>'a.sacco_member_id="'.$member_id.'" and a.sacco_member_id=b.member_id','return_type'=>'single'));
+
+  $sacco  = $con->getRows('sacco', array('where'=>'sacco_id="'.$_SESSION['USR_OF'].'"','return_type'=>'single'));
 ?>
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
     <div class="card-body px-4 py-3">
@@ -215,32 +217,42 @@
               <div class="card">                
                 <div class="card-body p-4">
                   <?php if($member['account_status'] == 0 || $member['account_status'] == 1 || $member['account_status'] == 3){  ?>
-                  <h4 class="fw-semibold mb-3">Is <?=ucwords($member['first_name'])?> no longer with Muscco?</h4>
+                  <h4 class="fw-semibold mb-3">Is <?=ucwords($member['first_name'])?> no longer with <b><?=$sacco['sacco_name']?></b>?</h4>
                   <div class="d-flex align-items-center justify-content-between pb-7">
-                    <p class="mb-0">Once a member resigns or leaves Muscco because of any reason, his/her account will be active and they can still access your information, to avoid this deactivate his/her account now.</p>
+                    <p class="mb-0">Once a member resigns or leaves <b><?=$sacco['sacco_name']?></b> because of any reason, his/her account will be active and they can still access your information, to avoid this deactivate his/her account now.</p>
                     <button class="btn btn-danger deactivate_account" data-id3="<?=$member['member_id']?>">Deactivate</button>
                   </div>
                   <?php }elseif($member['account_status'] == 2){ ?>
-                    <h4 class="fw-semibold mb-3">Is <?=ucwords($member['first_name'])?> back with Muscco?</h4>
+                    <h4 class="fw-semibold mb-3">Is <?=ucwords($member['first_name'])?> back with <b><?=$sacco['sacco_name']?></b>?</h4>
                     <div class="d-flex align-items-center justify-content-between pb-7">
                       <p class="mb-0">Once an account has been deactivated, it can be reactivated.</p>
                       <button class="btn btn-danger reactivate_account" data-id3="<?=$member['member_id']?>">Reactivate</button>
                     </div>
                   <?php } ?>
-                  <?php 
-                    $permissions = $con->getRows('permissions', array('where'=>'permission_id=3 or permission_id=9','order_by'=>'permission_id')); 
-                    if(!empty($permissions)){
-                      foreach ($permissions as $pem) { ?>
-                        <div class="d-flex align-items-center justify-content-between py-3 border-top">
-                          <div>
-                            <h5 class="fs-4 fw-semibold mb-0"><?=$pem['permission']?></h5>
-                            <p class="mb-0"><?=$pem['description']?></p>
-                          </div>
-                          <button class="btn btn-primary grant_access" data-id3="<?=$pem['permission_id']?>" data-member="<?=$member_id?>">Grant</button>
-                        </div>
-                  <?php    }
+
+                  <?php
+                    $permissions = $con->getRows('permissions', array('where'=>'permission_id=3 or permission_id=9','order_by'=>'permission_id'));
+                    if (!empty($permissions)) {
+                        foreach ($permissions as $permission) {
+                            $access = $con->getRows('permissions_granted', array('where'=>'member_id="'.$member_id.'" and permission_id="'.$permission['permission_id'].'"', 'return_type'=>'single'));
+                            $isGranted = !empty($access);
+
+                            echo '<div class="d-flex align-items-center justify-content-between py-3 border-top">';
+                            echo '<div>';
+                            echo '<h5 class="fs-4 fw-semibold mb-0">' . $permission['permission'] . '</h5>';
+                            echo '<p class="mb-0">' . $permission['description'] . '</p>';
+                            echo '</div>';
+
+                            if ($isGranted) {
+                                echo '<button class="btn btn-danger revoke_permision" data-id4="' . $permission['permission_id'] . '" data-id3="' . $access['granted_id'] . '" data-member="' . $member['member_id'] . '">Revoke</button>';
+                            } else {
+                                echo '<button class="btn btn-primary grant_access" data-id3="' . $permission['permission_id'] . '" data-member="' . $member['member_id'] . '">Grant</button>';
+                            }
+
+                            echo '</div>';
+                        }
                     }
-                  ?>
+                    ?>
                 </div>
               </div>
             </div>
