@@ -103,12 +103,12 @@
                                 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                                     <div class="btn-group me-2 mb-2" role="group" aria-label="First group">
                                       
-                                      <a href="dashboard.php?page=loan_details&loan_id=<?=$invoice['loan_id']?>" class="btn btn-primary btn-sm btn_ticket_cancel" data-id3="<?=$ticket['ticket_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View Details" disabled>
+                                      <a href="dashboard.php?page=loan_details&loan_id=<?=$invoice['loan_id']?>" class="btn btn-primary btn-sm btn_ticket_cancel" data-id3="<?=$ticket['ticket_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="View Details">
                                         <i class="ti ti-pencil fs-4"></i>
                                       </a>
-                                      <a href="dashboard.php?page=loan_details&loan_id=<?=$invoice['loan_id']?>" class="btn btn-danger btn-sm btn_ticket_cancel" data-id3="<?=$ticket['ticket_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cancel Loan" disabled>
+                                      <button class="btn btn-danger btn-sm btn_ticket_cancel" data-id3="<?=$ticket['ticket_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Cancel Loan">
                                         <i class="ti ti-trash fs-4"></i>
-                                      </a>
+                                      </button>
                                       
                                     </div>
                                     

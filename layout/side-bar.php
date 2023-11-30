@@ -544,6 +544,7 @@
 
           </a>
         </li>
+      <?php } if($_SESSION['USR_OF'] == 0 || $_SESSION['USR_TYP'] == 1){ ?>
         <li class="sidebar-item">
           <a class="sidebar-link justify-content-between" href="dashboard.php?page=help_desk" aria-expanded="false">
             <div class="d-flex align-items-center gap-3">
@@ -555,7 +556,7 @@
           </a>
 
         </li>
-        <?php } if($_SESSION['USR_OF'] != 999){ ?>
+        
         <li class="sidebar-item">
           <a class="sidebar-link" href="dashboard.php?page=faqs" aria-expanded="false">
             <span>

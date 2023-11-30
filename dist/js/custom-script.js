@@ -1530,8 +1530,10 @@ function addMember() {
       }else if(response == 9){
         $("#error").fadeIn(1000, function(){            
           $("#error").html('<div class="alert alert-danger"> Sorry, there is no new information to save!</div>');
-          $("#save_member").html('Save');
+          $("#save_member").html('Save');          
         });
+
+        $("#update_member").html('Update Details');
         $("#error").delay(6000).fadeOut(function(){});
       }else if(response == 10){
         $("#error").fadeIn(1000, function(){            
@@ -1539,6 +1541,14 @@ function addMember() {
           $("#save_member").html('Save');
         });
         $("#error").delay(6000).fadeOut(function(){});
+      }
+      else if(response == 11){
+        $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-success"> The details has been updated successfuly!</div>');
+          $("#update_member").html('Update Details');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
+        //setTimeout(' window.location.href = ""; ', 6000);
       }
     },
     contentType: false,

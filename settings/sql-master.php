@@ -502,9 +502,9 @@
 		}
 	}
 
-	//update sacco member
+	//update sacco member profile
 	if(isset($_POST['update_sacco_member'])){
-		$id = $con->get_random_string_max(60);
+		$id = $con->clean($_POST['id']);
 
 		$data = array(
 				'first_name'	   => $con->clean($_POST['first_name']),
@@ -514,11 +514,11 @@
 				'position_id'	   => $con->clean($_POST['position']),
 				'department_id'	   => $con->clean($_POST['department'])
 			);
-		$update = $con->update('sacco_members', $data, array('sacco_member_id'=>$_SESSION['USR_ID']));
+		$update = $con->update('sacco_members', $data, array('sacco_member_id'=>$id));
 		if(!empty($update)){
-			echo "4";
+			echo "11";
 		}else{
-			echo "5";
+			echo "9";
 		}
 	}
 

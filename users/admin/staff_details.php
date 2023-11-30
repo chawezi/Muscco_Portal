@@ -147,7 +147,7 @@
                         <div class="col-12">
                           <div class="d-flex align-items-center justify-content-end mt-4 gap-3">
                             <input type="hidden" name="id" value="<?=$member_id?>">
-                            <button type="submit" class="btn btn-primary px-4" name="update_staff" id="update_member">         
+                            <button type="submit" class="btn btn-primary px-4"  name="update_sacco_member" id="update_member">         
                                 Update Details
                             </button>
                           </div>

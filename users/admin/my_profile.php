@@ -153,7 +153,7 @@
                       <input type="text" class="form-control" name="username" value="<?=$username['username']?>">
                     </div>
                     <div class="d-flex align-items-center justify-content-end mt-4 gap-3">
-                      <input type="hidden" name="user_id" value="<?=$member_id?>">
+                      <input type="hidden" name="id" value="<?=$member_id?>">
                         <button type="submit" class="btn btn-primary px-4" name="change_username" id="change_username">         
                             Change Username
                         </button>

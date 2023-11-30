@@ -192,7 +192,7 @@
           $("#save_member").html('Saving Member...');
           $("#update_member").html('Updating Details...');
         },
-        success : function(response){  //alert(response);
+        success : function(response){  alert(response);
           if(response == 1){
             $("#error").fadeIn(1000, function(){            
               $("#error").html('<div class="alert alert-success"> The staff member details has been saved successfuly!</div>');
@@ -230,8 +230,7 @@
               $("#update_member").html('Update Details');
             });
             $("#error").delay(6000).fadeOut(function(){});
-          }
-          
+          }          
         }
       });
       return false;
@@ -647,66 +646,74 @@
     });
 
     //grant_access rights to  a member
-    $(document).on('click', '.grant_access', function(){
-       var id=$(this).data("id3");
-       var member = $(this).data("member");
+$(document).on('click', '.grant_access', function(){
+   var id=$(this).data("id3");
+   var member = $(this).data("member");
 
-       if(confirm("Are you sure you want to grant this permision to this member?"))
-       {
-           var action='grant_access';
-           $.ajax({
-               url:"../../settings/sql-master.php",
-               method:"GET",
-               data:{id:id, member:member, action:action},
-               dataType:"text",
-               success:function(data){ alert(data);
-                   if(data == 1){
-                       $("#err").fadeIn(1000, function(){
-                           $("#err").html('<div class="alert alert-success" role="alert"> The member has been granted the selected permision.</div>');
-                       });
-                       $("#err").delay(6000).fadeOut(function(){});
-                   }else{
-                       $("#err").fadeIn(1000, function(){
-                           $("#err").html('<div class="alert alert-warning" role="alert"> Sorry, there was an error granting that permision, please try again!</div>');
-                       });
-                       $("#err").delay(6000).fadeOut(function(){});
-                   }
-                   getUserAccess();
+   if(confirm("Are you sure you want to grant this permision to this member?"))
+   {
+       var action='grant_access';
+       $.ajax({
+           url:"../../settings/sql-master.php",
+           method:"GET",
+           data:{id:id, member:member, action:action},
+           dataType:"text",
+           success:function(data){ //alert(data);
+               if(data == 1){
+                   $("#err").fadeIn(1000, function(){
+                       $("#err").html('<div class="alert alert-success" role="alert"> The member has been granted the selected permision.</div>');
+                   });
+                   $("#err").delay(6000).fadeOut(function(){});
+                   setTimeout(' window.location.href = ""; ', 4000);
+               }else if(data == 2){
+                   $("#err").fadeIn(1000, function(){
+                       $("#err").html('<div class="alert alert-warning" role="alert"> Sorry, there was an error granting that permision, please try again!</div>');
+                   });
+                   $("#err").delay(6000).fadeOut(function(){});
+               }else if(data == 3){
+                $("#err").fadeIn(1000, function(){
+                       $("#err").html('<div class="alert alert-warning" role="alert"> Sorry, that permision has already been granted.</div>');
+                   });
+                   $("#err").delay(6000).fadeOut(function(){});
                }
-           });
-       }
-    });
+               getUserAccess();
+           }
+       });
+   }
+});
 
-    //revoke_access rights to  a member
-    $(document).on('click', '.revoke_permision', function(){
-       var id=$(this).data("id3");
+//revoke_access rights to  a member
+$(document).on('click', '.revoke_permision', function(){
+   var id=$(this).data("id3");
+   var pem=$(this).data("id4");
+   var member = $(this).data("member");
 
-       if(confirm("Are you sure you want to revoke this permision from this member?"))
-       {
-           var action='revoke_permision';
-           $.ajax({
-               url:"../../settings/sql-master.php",
-               method:"GET",
-               data:{id:id, action:action},
-               dataType:"text",
-               success:function(data){ //alert(data);
-                   if(data == 1){
-                       $("#err").fadeIn(1000, function(){
-                           $("#err").html('<div class="alert alert-success" role="alert"> The selected permision has been revoked from the selected member.</div>');
-                       });
-                       $("#err").delay(6000).fadeOut(function(){});
-                   }else{
-                       $("#err").fadeIn(1000, function(){
-                           $("#err").html('<div class="alert alert-warning" role="alert"> Sorry, there was an error revoking that permision, please try again!</div>');
-                       });
-                       $("#err").delay(6000).fadeOut(function(){});
-                   }
-                   getUserAccess();
+   if(confirm("Are you sure you want to revoke this permision from this member?"))
+   {
+       var action='revoke_permision';
+       $.ajax({
+           url:"../../settings/sql-master.php",
+           method:"GET",
+           data:{id:id, member:member, pem:pem, action:action},
+           dataType:"text",
+           success:function(data){ //alert(data);
+               if(data == 1){
+                   $("#err").fadeIn(1000, function(){
+                       $("#err").html('<div class="alert alert-success" role="alert"> The selected permision has been revoked from the selected member.</div>');
+                   });
+                   $("#err").delay(6000).fadeOut(function(){});
+                   setTimeout(' window.location.href = ""; ', 4000);
+               }else{
+                   $("#err").fadeIn(1000, function(){
+                       $("#err").html('<div class="alert alert-warning" role="alert"> Sorry, there was an error revoking that permision, please try again!</div>');
+                   });
+                   $("#err").delay(6000).fadeOut(function(){});
                }
-           });
-       }
-    });
-
+               getUserAccess();
+           }
+       });
+   }
+});
     
   });
 </script>
