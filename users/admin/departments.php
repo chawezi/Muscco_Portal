@@ -31,9 +31,6 @@
       </button>
     </div>
   <div class="d-flex w-100">
-    <div class="left-part border-end w-20 flex-shrink-0 d-none d-lg-block">
-      <?php include_once('../../layout/admin.php') ?>
-    </div>
     <div class="d-flex w-100">
       <div class="w-100">
         <div class="chat-container h-100 w-100">
@@ -113,14 +110,7 @@
     </div>
 
 
-    <div class="offcanvas offcanvas-start user-chat-box" tabindex="-1" id="chat-sidebar" aria-labelledby="offcanvasExampleLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel"> Admin Settings </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-      </div>
-      <?php include('../../layout/admin.php'); ?>
-      
-    </div>
+    
   </div>
 </div>
 
