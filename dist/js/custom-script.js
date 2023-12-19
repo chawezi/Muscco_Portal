@@ -186,7 +186,47 @@ getDepartments();
 fetchInvoiceReport();
 getProfile();
 
-
+//add positions
+    $("#add-position").validate({
+      rules: {
+        position: {required: true}
+      },
+      messages: {
+        position:{required: "Please enter position"}
+      },
+      submitHandler: addPosition  
+    });    
+    /* Handling form functionality */
+    function addPosition() {    
+      var data = $("#add-position").serialize();        
+      $.ajax({        
+        type : 'POST',
+        url  : '../../settings/sql-master.php',
+        data : data,
+        beforeSend: function(){ 
+          $("#position_error").fadeOut();
+          $("#add_position").html(' Adding Position..');
+        },
+        success : function(response){ //alert(response);
+          if(response == 1) {                 
+            $("#position_error").fadeIn(1000, function(){            
+              $("#position_error").html('<div class="alert alert-success"> A position has been saved successfuly!</div>');
+              $("#add_position").html('Save Position');
+              $("#add-position")[0].reset();
+            });
+            $("#position_error").delay(6000).fadeOut(function(){});
+          } else if(response == 2) {                 
+            $("#position_error").fadeIn(1000, function(){            
+              $("#position_error").html('<div class="alert alert-danger"> Sorry, either there was an error saving the positions!</div>');
+              $("#add_position").html('Save Position');
+            });
+            $("#position_error").delay(6000).fadeOut(function(){});
+          }
+          getPositions();
+        }
+      });
+      return false;
+    } 
 $("#daily-itinery").validate({
       rules: {
         date:{required:true},
