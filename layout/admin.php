@@ -22,6 +22,7 @@
     <a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-8 mb-1 rounded-1"
       href="dashboard.php?page=positions"><i class="ti ti-list-details fs-5"></i>Positions</a>
   </li>
+  <?php if($_SESSION['USR_TYP'] != 0){ ?>
   <li class="border-bottom my-3"></li>
   <li class="fw-semibold text-dark text-uppercase mx-9 my-2 px-3 fs-2">Leave Settings</li>
   <li class="list-group-item border-0 p-0 mx-9">
@@ -36,6 +37,7 @@
     <a class="d-flex align-items-center gap-2 list-group-item-action text-dark px-3 py-8 mb-1 rounded-1"
       href="dashboard.php?page=current_fy" class="d-block "><i class="ti ti-calendar fs-5"></i>Current FY</a>
   </li>
+  <?php } ?>
   
 </ul>
 
