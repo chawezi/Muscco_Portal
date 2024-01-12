@@ -43,7 +43,15 @@
                     <div class="card">
                     <div class="card-body p-4">
                       <div id="error"></div>
-
+                      <?php
+                        $is_complete = false;
+                        $get_quest = $con->getRows('travel_advance_request', 
+                                            array('where'=>'request_status =2 and employee_id="'.$_SESSION['USR_ID'].'"', 'return_type'=>'count'));
+                        if($get_quest > 1){
+                          $is_complete = true;
+                          echo '<div class="alert alert-warning"> Hello '.$_SESSION['USR_NME'].', you still have unliquidated travel advance request. Please liquidate your past requests before posting a new one.</div>';
+                        }
+                      ?>
                       <form id="daily-itinery" action="" method="post">
                         <div class="row">
                           <b>Daily Itinerary</b>
@@ -62,7 +70,11 @@
                           </div>
                           <div class="col-lg-3">
                             <label for="exampleInputPassword1" class="form-label fw-semibold"></label>
+                            <?php if($is_complete == false){ ?>
                             <button type="submit" name="add_itinery" id="add_btn"  class="btn btn-primary mt-4">Add</button>
+                            <?php } else{ ?>
+                              <button type="submit" name="add_itinery" id="add_btn"  class="btn btn-primary mt-4" disabled>Add</button>
+                            <?php } ?>
                           </div>
                           <div class="col-lg-12">
                             <hr>
@@ -149,7 +161,11 @@
                            <div class="col-12">
                             <div class="d-flex align-items-center justify-content-end gap-3">
                               <input type="hidden" name="user_id" value="<?=$_SESSION['USR_ID']?>">
+                              <?php if($is_complete == false){ ?>
                               <button type="submit" name="travel_advance_request" id="vehicle_request"  class="btn btn-primary ">Submit Request</button>
+                              <?php } else{ ?>
+                                 <button type="submit" name="travel_advance_request" id="vehicle_request"  class="btn btn-primary " disabled>Submit Request</button>
+                              <?php } ?>
                             </div>
                           </div>
                         </div>

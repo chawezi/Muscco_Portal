@@ -2,7 +2,7 @@
 include_once('../../settings/master-class.php');
 $con =new MasterClass;
 ?>
-<table id="zero_config" class="table search-table align-middle text-nowrap dataTable">
+<table id="zero_config" class="table search-table align-middle dataTable">
   <thead class="header-item">
     <th>
       #

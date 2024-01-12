@@ -189,7 +189,7 @@
               <span class="rounded-3">
                 <i class="ti ti-settings"></i>
               </span>
-              <span class="hide-menu">Admin Settings</span>
+              <span class="hide-menu">System Settings</span>
             </a>
           </li>
         <?php } elseif ($_SESSION['USR_TYP'] == 1) { ?>

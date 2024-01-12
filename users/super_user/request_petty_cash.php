@@ -62,7 +62,7 @@
                         <div class="col-md-4">
                           <div class="mb-3">
                             <label>Amount</label>
-                            <input type="number" min="0" max="5000" class="form-control" name="amount" >
+                            <input type="number" min="0" max="10000" class="form-control" name="amount" >
                           </div>
                         </div>
                         </div>

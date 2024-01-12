@@ -8,7 +8,7 @@ if(isset($_GET['action'])){
 
 if($action == 'get_categories'){
 ?>
-<table id="zero_config" class="table search-table align-middle text-nowrap dataTable">
+<table id="zero_config" class="table search-table align-middle dataTable">
   <thead class="header-item">
     <th>
       #
@@ -53,7 +53,7 @@ if($action == 'get_categories'){
   </tbody>
 </table>
 <?php } else if($action == 'get_docs'){ ?>
-<table id="zero_config" class="table search-table align-middle text-nowrap dataTable">
+<table id="zero_config" class="table search-table align-middle dataTable">
     <thead class="header-item">
       <th>
         #
@@ -106,14 +106,17 @@ if($action == 'get_categories'){
                          </td>
               
               <td>
-                <div class="action-btn">
-                  <a href="download-file.php?dir=../../uploads/docs/&file=<?=$doc['document_file']?>" target="_blank" class="btn btn-primary btn-sm  ms-2" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download">
-                    <i class="ti ti-download fs-5"></i>
-                  </a>
-                  <button class="btn btn-danger btn-sm delete_document ms-2" data-id3="<?=$doc['document_id']?>" data-doc="<?=$doc['document_file']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete">
-                    <i class="ti ti-trash fs-5"></i>
-                  </button>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                  <div class="btn-group me-2 mb-2" role="group" aria-label="First group">
+                    <a href="download-file.php?dir=../../uploads/docs/&file=<?=$doc['document_file']?>" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Download Document">
+                      <i class="ti ti-download fs-4"></i>
+                    </a>
+                    <button class="btn btn-sm btn-danger btn-sm delete_document" data-id3="<?=$doc['document_id']?>" data-doc="<?=$doc['document_file']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Document">
+                      <i class="ti ti-trash fs-4"></i>
+                    </button>
+                  </div>
                 </div>
+
               </td>
             </tr>
       <?php }

@@ -55,7 +55,7 @@
         action:"Please select the action",
         subject:"Please enter subject",
         sponsor:"Please enter sponsor",
-        amount:"Please enter amount that is less than 5,000",
+        amount:"Please enter amount that is less than or equal to 10,000",
         reasons:"Please enter description",
       },
       submitHandler: pettyCash  

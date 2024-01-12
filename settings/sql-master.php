@@ -2771,21 +2771,34 @@
 
 		//echo "hello".$fuel;
 
+		//checks if there are any unliquidated travel requests
+
+		//99 declined / 5 Completed
+
+		$get_quest = $con->getRows('travel_advance_request', array('where'=>'request_status =2 and employee_id="'.$_SESSION['USR_ID'].'"', 'return_type'=>'count'));
+		if($get_quest > 2){
+			echo "99";
+			exit();
+		}
+
+		
+
 		$data = array(
-						'travel_advance_id' => $_SESSION['travel_advance_id'],
-						'employee_id'		=> $_SESSION['USR_ID'],
-						'pillar'			=> $con->clean($_POST['pillar']),
-						'purpose'			=> $con->clean($_POST['purpose']),
-						'logistics'			=> $con->clean($_POST['logistics']),
-						'nights'			=> $con->clean($_POST['nights']),
-						'rate'				=> $rate_night,
-						'day_meal'			=> $day_meal,
-						'mileage'			=> $mileage,
-						'total_fuel'		=> $total_fuel,
-						'fuel'				=> $con->clean($_POST['fuel']),
-						'fuel_price'		=> $current_price,
-						'total_budget'		=> $total
+					'travel_advance_id' => $_SESSION['travel_advance_id'],
+					'employee_id'		=> $_SESSION['USR_ID'],
+					'pillar'			=> $con->clean($_POST['pillar']),
+					'purpose'			=> $con->clean($_POST['purpose']),
+					'logistics'			=> $con->clean($_POST['logistics']),
+					'nights'			=> $con->clean($_POST['nights']),
+					'rate'				=> $rate_night,
+					'day_meal'			=> $day_meal,
+					'mileage'			=> $mileage,
+					'total_fuel'		=> $total_fuel,
+					'fuel'				=> $con->clean($_POST['fuel']),
+					'fuel_price'		=> $current_price,
+					'total_budget'		=> $total
 					);
+
 		$submit = $con->insert('travel_advance_request', $data);
 		if(!empty($submit)){
 			echo "3";

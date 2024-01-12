@@ -1,7 +1,7 @@
 <?php
   $status = '';
-  $checker = $con->getRows('travel_advance_request', array('where'=>'employee_id="'.$_SESSION['USR_ID'].'" and request_status = 2', 'return_type'=>'single'));
-  if(!empty($checker)){
+  $checker = $con->getRows('travel_advance_request', array('where'=>'employee_id="'.$_SESSION['USR_ID'].'" and request_status = 2', 'return_type'=>'count'));
+  if($checker >= 2){
     $status = 'not liquidated';
   }
 ?>
