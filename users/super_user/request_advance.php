@@ -62,22 +62,12 @@
                           <div class="col-md-4">
                             <div class="mb-3">
                               <label>Last Installment</label>
-                              <input type="month" class="form-control" name="endjj" >
+                              <input type="month" class="form-control" name="end" >
                             </div>
                           </div>
                         </div>
                         <div class="row">
-                          <div class="col-md-4">
-                            <div class="mb-3">
-                              <label>Any Previous Advance(s)</label>
-                              <select class="form-control form-select" name="logistics" id="logistics" tabindex="1">
-                                <option value="">Select Option</option>
-                                <option value="1">Yes</option>
-                                <option value="2">No</option>
-                              </select> 
-                            </div>
-                          </div>
-                          <div class="col-md-8">
+                          <div class="col-md-12">
                             <div class="mb-3">
                               <label>Purpose of Advance</label>
                               <textarea class="form-control" rows="2" name="reasons" placeholder=""></textarea>

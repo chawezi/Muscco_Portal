@@ -1,3 +1,9 @@
+<?php
+  $band = $_SESSION['USR_BD'];
+  $get_meal = $con->getRows('band_rates', array('where'=>'band_id="'.$band.'"','return_type'=>'single'));
+  $meal = $get_meal['withoutaccomodation_nomeals'];
+  
+?>
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
   <div class="card-body px-4 py-3">
     <div class="row align-items-center">
@@ -110,12 +116,24 @@
                                 <option value="1">Accomodated</option>
                                 <option value="2">Look for own Accomodation</option>
                                 <option value="3">One Day Return</option>
+                                <option value="4">Accommodated & Look for own Accomodation</option>
                               </select> 
                             </div> 
                             <div class="mb-4">
-                              <label for="exampleInputPassword1" class="form-label fw-semibold">Rate Per Night</label>
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Rate Per Night <small id="rate_msg">- Accomodated</small></label>
                               <input type="number" class="form-control" name="rate_night" id="rate_night" disabled>  
                             </div> 
+                            <div id="another_rate">
+                              <div class="mb-4">
+                                <label for="exampleInputPassword1" class="form-label fw-semibold">Rate Per Night <small>- Look for Own Accomodation</small></label>
+                                <input type="number" class="form-control" name="own_rate" id="own_rate" disabled>  
+                              </div> 
+                            </div>
+
+                            <div class="mb-4">
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Tollgate Fees</label>
+                              <input type="number" class="form-control" min="0" name="tollgate" id="tollgate">  
+                            </div>
                             <div class="mb-4">
                               <label for="exampleInputPassword1" class="form-label fw-semibold">Mileage</label>
                               <input type="number" class="form-control" name="mileage" id="mileage">  
@@ -132,11 +150,23 @@
                               <input type="text" class="form-control" name="purpose">  
                             </div>
                             <div class="mb-4">
-                              <label for="exampleInputPassword1" class="form-label fw-semibold">Night(s)</label>
-                              <input type="number" min="0" class="form-control" name="nights" id="nights" onChange="sum()">  
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Night(s) <small id="days_acc_msg">- Days Accomodated</small></label>
+                              <input type="number" min="0" class="form-control" name="nights" id="nights" onChange="sum()"> 
+                              
+                            </div>
+                            <div id="another_days">
+                              <div class="mb-4">
+                                <label for="exampleInputPassword1" class="form-label fw-semibold">Night(s) <small>- Days to look for own accomodation</small></label>
+                                <input type="number" min="0" class="form-control" name="other_nights" id="other_nights" onChange="sum()">  
+                                
+                              </div>
                             </div>
                             <div class="mb-4">
-                              <label for="exampleInputPassword1" class="form-label fw-semibold">Total Nights Allowance</label>
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Meal Allowance</label>
+                              <input type="number" class="form-control" name="meal" id="meal" value="<?=$meal?>" disabled>  
+                            </div> 
+                            <div class="mb-4">
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Total Allowances</label>
                               <input type="number" class="form-control" id="total_allowance" disabled>  
                             </div>
                             <div class="mb-4">

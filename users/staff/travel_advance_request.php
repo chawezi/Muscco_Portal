@@ -83,6 +83,8 @@
                                               echo "Look for own Accomodation";
                                             }else if($day['logistics'] == 3){
                                               echo "One Day Return";
+                                            }else if($day['logistics'] == 4){
+                                              echo "Accomodated / Own Accomodation";
                                             }
                                           ?>                                          
                                         </span>
@@ -94,7 +96,7 @@
                                   <div class="d-flex align-items-center">
                                     <div class="ms-3">
                                       <div class="user-meta-info">
-                                        <h6 class="user-name mb-0" data-name=""><?=$day['nights']?></h6>
+                                        <h6 class="user-name mb-0" data-name=""><?php $nights=$day['nights']+$day['own_days']; echo $nights;?></h6>
                                       </div>
                                     </div>
                                   </div>
@@ -118,10 +120,10 @@
                                         echo'<span class="mb-1 badge rounded-pill bg-warning">Pending</span>';
                                         break;
                                       case 2:
-                                        echo'<span class="mb-1 badge rounded-pill bg-primary">Approved</span>';
+                                        echo'<span class="mb-1 badge rounded-pill bg-success">Approved</span>';
                                         break;
                                       case 4:
-                                        echo'<span class="mb-1 badge rounded-pill bg-info">Liquidated</span>';
+                                        echo'<span class="mb-1 badge rounded-pill bg-success">Liquidated</span>';
                                         break;
                                       case 5:
                                         echo'<span class="mb-1 badge rounded-pill bg-success">Complete</span>';
@@ -149,7 +151,7 @@
                                       <a href="dashboard.php?page=travel_advance_details&request_id=<?=$day['travel_advance_id']?>" class="btn btn-primary btn-sm btn_day_cancel" data-bs-placement="top" data-bs-title="View Details">
                                         <i class="ti ti-pencil fs-4"></i>
                                       </a>
-                                      <?php if($day['request_status'] == 1){ ?>
+                                      <?php if($day['request_status'] == 0){ ?>
                                         <button class="btn btn-sm btn-danger btn-sm btn_delete_advance_request" data-id3="<?=$day['travel_advance_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Request">
                                         <i class="ti ti-trash fs-4"></i>
                                       </button>

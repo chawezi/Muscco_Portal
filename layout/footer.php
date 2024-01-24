@@ -145,47 +145,101 @@
           window.requestAnimationFrame(step);
       }
       });
-
+      //total_budget
+      
       function sum()
       {
 
+         var find_acco = 0;
          var days = document.getElementById('nights').value;
+         var other_nights = document.getElementById('other_nights').value;
          var rate = document.getElementById('rate_night').value;
+         var another_rate = document.getElementById('own_rate').value;
          var fuel = document.getElementById('total_fuel').value;
-         var sum = parseInt(days) * parseInt(rate);
+         var meal = document.getElementById('meal').value;
+         var tollgate = document.getElementById('tollgate').value;
+
+         if(other_nights != ''){
+          find_acco = parseInt(other_nights) * parseInt(another_rate);
+         }
+         
+
+         var sum = (parseInt(days) * parseInt(rate)) + parseFloat(meal) + find_acco;
          document.getElementById('total_allowance').value = sum;
 
-         //total_budget
          var total = 0;
-         total = parseFloat(sum) + parseFloat(fuel);
+         if(fuel == ''){
+          fuel = 0;
+         }
+         
+         if(tollgate == ''){
+          tollgate =0;
+         }
+         total = parseFloat(sum) + parseFloat(fuel) + parseFloat(tollgate);
          document.getElementById('total_budget').value = total;
       }
       $('#nights').keyup(function() {
         sum();
       });
+      $('#other_nights').keyup(function() {
+        sum();
+      });
       $('#mileage').keyup(function() {
         sum();
       });
-      //sum();
+      $('#tollgate').keyup(function() {
+        sum();
+      });
+      sum();
     
-
+      var x = document.getElementById("another_days");
+      var another_rate = document.getElementById("another_rate");
+      var days_acc_msg = document.getElementById("days_acc_msg");
+      var rate_msg = document.getElementById("rate_msg");
+      x.style.display = "none";
+      another_rate.style.display = "none";
+      days_acc_msg.style.display = "none";
+      rate_msg.style.display = "none";
        $(function($) {
       var list_select_id = 'logistics'; //second select list ID
       var list_target_id = 'rate_night';
+      var own_rate = 'own_rate';
       var initial_target_html = '<option value="">Select Logistics...</option>'; //Initial prompt for target select
       $('#'+list_select_id).change(function(e) {
         //Grab the chosen value on first select list change
         var selectvalue = $(this).val();
 
         if (selectvalue != ""){
-            //alert(selectvalue);
+            //alert(selectvalue);            
+            if (selectvalue == 4) {
+              x.style.display = "block";
+              another_rate.style.display = "block";
+              days_acc_msg.style.display = "inline";            
+              rate_msg.style.display = "inline";
+            } else {
+              x.style.display = "none";
+              another_rate.style.display = "none";
+              days_acc_msg.style.display = "none";
+              rate_msg.style.display = "none";
+              //$("#days_acc_msg")[0].reset();
+              document.getElementById('other_nights').value = '';
+            }
+
             $.ajax({
                 url: 'get_rates_data.php?action=rates&svalue='+selectvalue,
                 success: function(output) {
-                  //alert(output);
-                  $('#'+list_target_id).val(output);
-                  sum();
-                  //document.getElementById('rate_night').value = output;
+                  // Check if the response is an object (JSON)
+                  if (typeof output === 'object') {
+                    // You can access individual values like this:
+                    var value1 = output.value1;
+                    var value2 = output.value2;
+
+                    $('#'+list_target_id).val(value1);
+                    $('#'+own_rate).val(value2);
+                  } else {
+                    $('#'+list_target_id).val(output);
+                  }
+                  sum();                  
               },
               error: function (xhr, ajaxOptions, thrownError) {
               //alert(xhr.status + " "+ thrownError);
@@ -225,55 +279,13 @@
             }});
         
           }else{
-            alert('Select fuel type');
+            alert('You have deselected the fuel');
           }
         });
     });
 
     $(document).ready(function(){
-      //generate reports
-        $("#generate-report").validate({
-        rules:
-        {
-          date_from:{required:true},
-          date_to:{required:true},
-          section:{required:true}       
-         },
-         messages:
-         {
-           date_from:"Please select date from",
-           date_to:"Please select date to",
-           section: "please select the section"
-         },
-         submitHandler: generateReport
-        });  
-        /* validation */
-
-        /* add measurement submit */
-        function generateReport()
-        {   
-          var data = $("#generate-report").serialize(); 
-          //alert('sup'); 
-            
-          $.ajax({
-            
-          type : 'GET',
-          url  : 'get_travel_advance_report.php',
-          data : data,
-          beforeSend: function()
-          { 
-            $("#error").fadeOut();
-            $("#generate_report").html('Generating...');
-          },
-          success :  function(response)
-            {    //alert(response);
-            $('#show_travel_advance_report').html(response);
-            $("#generate_report").html('Generate');
-
-            }
-          });
-            return false;
-        }
+      
 
       //generate reports
     $("#advancereport-custom").validate({

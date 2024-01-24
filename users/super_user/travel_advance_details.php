@@ -254,11 +254,11 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                             <div class="card shadow-none mt-3 mb-0">
 
                               <table class="table border table-striped table-bordered">
-                                <tr>
-                                  <th>Employment #</th>
-                                  <td><?=$member['employee_id']?></td>
+                                <tr>                                  
                                   <th>Requested By</th>
                                   <td><?=ucwords($member['first_name'])." ".ucwords($member['last_name'])?></td>
+                                  <th>Date Posted</th>
+                                  <td><?=$con->shortDate($member['date_posted'])?></td>
                                 </tr>  
                                 <tr>
                                   <th>Pillar</th>
@@ -309,48 +309,84 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                                               echo "Look for own Accomodation";
                                             }else if($member['logistics'] == 3){
                                               echo "One Day Return";
+                                            }else if($member['logistics'] == 4){
+                                              echo "Accomodated / Own Accomodation";
                                             }
                                           ?>
                                   </td>
                                   <th>Night(s)</th>
-                                  <td><?=$member['nights']?></td>
+                                  <td>
+                                    <?php
+                                      if($member['logistics'] == 4){
+                                        $days = $member['nights'] + $member['own_days'];
+                                        echo $days.' ('.$member['nights'].' <small>Accomodated</small><br/>'.$member['own_days'].' <small>Own Accomodation</small>)';
+                                      }else{
+                                        echo $member['nights'];
+                                      }
+
+                                      $allowances = ($member['rate']*$member['nights']) + $member['day_meal'] + ($member['own_days']*$member['own_rate']);
+                                      
+                                    ?>
+                                      
+                                    </td>
                                 </tr>
                                 <tr>
                                   <th>Rate Per Night</th>
                                   
-                                  <td>MK<?=number_format($member['rate'], 2, '.',',')?></td>
+                                  <td>
+                                    <?php 
+                                        if($member['logistics'] == 4){
+                                            echo 'MK'.number_format($member['rate'], 2, '.',',').' <small>Accomodated</small><br/>MK'.number_format($member['own_rate'], 2, '.',',').' <small>Own Accomodation</small>';
+                                        }else{
+                                          echo 'MK'.number_format($member['rate'], 2, '.',',');
+                                        }
+                                        
+                                    ?>
+                                      
+                                  </td>
                                   <th>Day Meal</th>
                                   <td>MK<?=number_format($member['day_meal'], 2, '.',',')?></td>
                                 </tr>
                                 <tr>
                                   <th>Total Allowance</th>
                                   
-                                  <td>MK<?=number_format($member['rate']*$member['nights']+$member['day_meal'], 2, '.',',')?></td>
-                                  <th>Mileage</th>
-                                  <td><?=$member['mileage']?>KMs</td>
+                                  <td>MK<?=number_format($allowances, 2, '.',',')?></td>
+                                  <th>Tollgate Fees</th>
+                                  <td>MK<?=number_format($member['tollgate_fees'], 2, '.',',')?></td>
+                                  
                                 </tr>
                                 <tr>
+                                  <th>Mileage</th>
+                                  <td><?=$member['mileage']?>KMs</td>
                                   <th>Fuel Type</th>
                                   
                                   <td>
                                     <?php
-                                      $fuel = $con->getRows('fuel_prices', array('where'=>'fuel_id="'.$member['fuel'].'"','return_type'=>'single')); echo $fuel['fuel'];?></td>
+                                      $fuel = $con->getRows('fuel_prices', 
+                                                      array('where'=>'fuel_id="'.$member['fuel'].'"','return_type'=>'single')); 
+                                      if(!empty($fuel)){
+                                        echo $fuel['fuel'];
+                                      }else{
+                                        echo "-";
+                                      }
+                                    ?></td>
+                                  
+                                </tr>
+                                <tr>
                                   <th>Fuel Price / Litre</th>
                                   <td>MK<?=number_format($member['fuel_price'], 2, '.',',')?></td>
+                                  
+                                  <th>Total Fuel(Litres)</th>
+                                  <td><?=$member['mileage']/10?> Litres</td>
                                 </tr>
                                 <tr>
                                   <th>Total Fuel(MWK)</th>
                                   
                                   <td>MK<?=number_format($member['total_fuel'], 2, '.',',')?></td>
-                                  <th>Total Fuel(Litres)</th>
-                                  <td><?=$member['mileage']/10?> Litres</td>
-                                </tr>
-                                <tr>
                                   <th>Total Budget</th>
                                   
                                   <td>MK<?=number_format($member['total_budget'], 2, '.',',')?></td>
-                                  <th>Date Posted</th>
-                                  <td><?=$con->shortDate($member['date_posted'])?></td>
+                                  
                                 </tr>
                               </table>
                             </div>

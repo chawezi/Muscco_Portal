@@ -364,6 +364,21 @@ if($type == 'travel_advance_details'){
 	 $date_approved = '';
 	 $approver_note = '';
 	 $logistic = '';
+	 $nights = '';
+	 $allowances = '';
+	 $rates = '';
+
+	 $allowances = ($row['rate']*$row['nights']) + $row['day_meal'] + ($row['own_days']*$row['own_rate']);
+
+	 if($row['logistics'] == 4){
+      $days = $row['nights'] + $row['own_days'];
+      $nights = $days.' ('.$row['nights'].' <small>Accomodated</small> / '.$row['own_days'].' <small>Own Accomodation</small>)';
+      $rates = 'MK'.number_format($row['rate'], 2, '.',',').' <small>Accomodated</small><br/>MK'.number_format($row['own_rate'], 2, '.',',').' <small>Own Accomodation</small>';
+    }else{
+      $nights = $row['nights'];
+      $rates = 'MK'.number_format($row['rate'], 2, '.',',');
+    }
+
 	 if(!empty($row)){
 	 	$approver_note = $row['approver_note'];
 	 	$logistic = $row['logistics'];
@@ -375,7 +390,10 @@ if($type == 'travel_advance_details'){
 	      $logistics = "Look for own Accomodation";
 	    }else if($logistic == 3){
 	      $logistics = "One Day Return";
+	    }else if($logistic == 4){
+	      $logistics = "Accomodated / Own Accomodation";
 	    }
+
 	    $checker = $con->getRows('travel_advance_request a, muscco_members b',
                         array('where'=>'a.travel_advance_id="'.$_GET['request_id'].'" and a.checked_by=b.muscco_member_id', 'return_type'=>'single'));
 	    if(!empty($checker)){
@@ -438,22 +456,20 @@ if($type == 'travel_advance_details'){
 	        <h1 style="padding:0px; margin:0px; float:left; text-align:left;"><br><small>BUDGET</small></h1>
 	        <table border="1">
 		        <tr>
-					<td><b>Nights</b></td>
+								<td><b>Nights</b></td>
 		            <td><b>Rate/Night</b></td>
-		            <td><b>Day Allowance</b></td>
-		            <td><b>Total Allowance</b></td>	            
+		            <td><b>Day Allowance</b></td>            
 		        </tr>
 		        <tr>	        	
-		            <td><p>'.$row['nights'].' </p></td>
-		            <td>MK'.number_format($row['rate'], 2, '.',',').'</td>
+		            <td><p>'.$nights.' </p></td>
+		            <td>'.$rates.'</td>
 		            <td>MK'.number_format($row['day_meal'], 2, '.',',').'</td>				
-		            <td>MK'.number_format(($row['rate']*$row['nights'])+$row['day_meal'], 2, '.',',').'</td>				
+		            				
 		        </tr>
 		        <tr>
-					<td><b>Mileage</b></td>
-		            <td><b>Fuel</b></td>
-		            <td><b>Rate/Litre</b></td>
-		            <td><b>Total Fuel</b></td>	            
+		            <td><b>Total Allowance</b></td>	
+		            <td><b>Tollgate Fees</b></td>	
+								<td><b>Mileage</b></td>           
 		        </tr>
 		        ';
 		        $f = ''; //fuel
@@ -463,24 +479,33 @@ if($type == 'travel_advance_details'){
 		        }
 		        $fuel = $con->getRows('fuel_prices', array('where'=>'fuel_id="'.$row['fuel'].'"','return_type'=>'single')); if(!empty($fuel)){ $f= $fuel['fuel'];}else{$f= "-";}
 		        $html .='
-		        <tr>	        	
-		            <td><p>'.$row['mileage'].' KMs</p></td>
-		            <td>'.$f.' ('.$liters.'Ltrs)</td>
-		            <td>MK'.number_format($fp, 2, '.',',').'</td>				
-		            <td>MK'.number_format($row['total_fuel'], 2, '.',',').'</td>				
+		        <tr>
+		        		<td>MK'.number_format($allowances, 2, '.',',').'</td>	        	
+		            <td><p>MK'.number_format($row['tollgate_fees'], 2, '.',',').'</p></td>
+		            <td><p>'.$row['mileage'].' KMs</p></td>		
 		        </tr>
 
 		        <tr>
-					<td></td>
-		            <td></td>
-		            <td></td>
-		            <td><b>Total Budget</b></td>	            
+		            
+		            <td><b>Fuel</b></td> 
+		            <td><b>Rate/Litre</b></td>
+		            <td><b>Total Fuel</b></td>	
+		            	            
 		        </tr>
-		        <tr>	        	
-		            <td></td>
-		            <td></td>
-		            <td></td>				
-		            <td>MK'.number_format($row['total_budget'], 2, '.',',').'</td>				
+		        <tr>		        		
+		            <td>'.$f.' ('.$liters.'Ltrs)</td>		        
+		            <td>MK'.number_format($fp, 2, '.',',').'</td>				
+		            <td>MK'.number_format($row['total_fuel'], 2, '.',',').'</td>					
+		        </tr>
+		        <tr>
+		        	<td></td>
+		        	<td></td>
+		        	<td><b>Total Budget</b></td>
+		        </tr>
+		        <tr>
+		        	<td></td>
+		        	<td></td>
+		        	<td>MK'.number_format($row['total_budget'], 2, '.',',').'</td>
 		        </tr>
 	        </table>
 

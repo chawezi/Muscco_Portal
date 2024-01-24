@@ -43,14 +43,17 @@ if($action == 'all'){
         $allowances = 0;
         $fuels = 0;
         $total = 0;
+        $tollgate = 0;
         foreach($all as $count){
           $allowances +=($count['rate']*$count['nights'])+$count['day_meal'];
           $fuels +=$count['total_fuel'];
           $total +=$count['total_budget'];
+          $tollgate +=$count['tollgate_fees'];
         }
       }
     ?>
     <th>Total Allowances<br> MK<?=number_format($allowances,2,'.',',')?></th>
+    <th>Total Tollgate Fees<br> MK<?=number_format($tollgate,2,'.',',')?></th>
     <th>Total Fuel<br> MK<?=number_format($fuels,2,'.',',')?></th>
     <th>Total<br> MK<?=number_format($total,2,'.',',')?></th></th>
   </tr>  
@@ -75,6 +78,7 @@ if($action == 'all'){
           $i=0;
           foreach($leave as $day){ 
             $i++;
+            $allowances = ($day['rate']*$day['nights']) + $day['day_meal'] + ($day['own_days']*$day['own_rate']);
       ?>
             <tr class="search-items">
               <td>
@@ -107,6 +111,8 @@ if($action == 'all'){
                             echo "Look for own Accomodation";
                           }else if($day['logistics'] == 3){
                             echo "One Day Return";
+                          }else if($day['logistics'] == 4){
+                            echo "Accomodation / Own Accomodation";
                           }
                         ?>                                          
                       </span>
@@ -129,7 +135,7 @@ if($action == 'all'){
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <div class="user-meta-info">
-                      <h6 class="user-name mb-0" data-name="">MK<?=number_format(($day['rate']*$day['nights'])+$day['day_meal'], 2, '.',',')?></h6>
+                      <h6 class="user-name mb-0" data-name="">MK<?=$allowances?></h6>
                       <span>MK<?=number_format($day['total_budget'], 2, '.',',')?></span>
                     </div>
                   </div>
@@ -195,6 +201,7 @@ if($action == 'all'){
       $allowances = 0;
       $fuels = 0;
       $total = 0;
+      $tollgate = 0;
       $all = $con->getRows('travel_advance_request', array('where'=>'(request_status >=2 and request_status <=5) and date_approved="'.$date.'"'));
       if(!empty($all)){
         
@@ -202,10 +209,12 @@ if($action == 'all'){
           $allowances +=($count['rate']*$count['nights'])+$count['day_meal'];
           $fuels +=$count['total_fuel'];
           $total +=$count['total_budget'];
+          $tollgate += $count['tollgate_fees'];
         }
       }
     ?>
     <th>Total Allowances<br> MK<?=number_format($allowances,2,'.',',')?></th>
+    <th>Total Tollgate Fees<br> MK<?=number_format($tollgate,2,'.',',')?></th>
     <th>Total Fuel<br> MK<?=number_format($fuels,2,'.',',')?></th>
     <th>Total<br> MK<?=number_format($total,2,'.',',')?></th></th>
   </tr>  
@@ -231,6 +240,8 @@ if($action == 'all'){
           $i=0;
           foreach($leave as $day){ 
             $i++;
+            $allowances = ($day['rate']*$day['nights']) + $day['day_meal'] + ($day['own_days']*$day['own_rate']);
+
       ?>
             <tr class="search-items">
               <td>
@@ -263,6 +274,8 @@ if($action == 'all'){
                             echo "Look for own Accomodation";
                           }else if($day['logistics'] == 3){
                             echo "One Day Return";
+                          }else if($day['logistics'] == 4){
+                            echo "Accomodated / Own Accomodation";
                           }
                         ?>                                          
                       </span>
@@ -285,7 +298,7 @@ if($action == 'all'){
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <div class="user-meta-info">
-                      <h6 class="user-name mb-0" data-name="">MK<?=number_format(($day['rate']*$day['nights'])+$day['day_meal'], 2, '.',',')?></h6>
+                      <h6 class="user-name mb-0" data-name="">MK<?=number_format($allowances)?></h6>
                       <span>MK<?=number_format($day['total_budget'], 2, '.',',')?></span>
                     </div>
                   </div>
@@ -362,6 +375,7 @@ if($action == 'all'){
       $allowances = 0;
       $fuels = 0;
       $total = 0;
+      $tollgate = 0;
       $all = $con->getRows('travel_advance_request', array('where'=>'(request_status >=2 and request_status <=5) and date_approved >="'.$monday.'" and date_approved <= "'.$saturday.'"'));
       if(!empty($all)){
         
@@ -369,10 +383,12 @@ if($action == 'all'){
           $allowances +=($count['rate']*$count['nights'])+$count['day_meal'];
           $fuels +=$count['total_fuel'];
           $total +=$count['total_budget'];
+          $tollgate +=$count['tollgate_fees'];
         }
       }
     ?>
     <th>Total Allowances<br> MK<?=number_format($allowances,2,'.',',')?></th>
+    <th>Total Tollgate Fees<br> MK<?=number_format($tollgate,2,'.',',')?></th>
     <th>Total Fuel<br> MK<?=number_format($fuels,2,'.',',')?></th>
     <th>Total<br> MK<?=number_format($total,2,'.',',')?></th></th>
   </tr>  
@@ -398,6 +414,8 @@ if($action == 'all'){
           $i=0;
           foreach($leave as $day){ 
             $i++;
+            $allowances = ($day['rate']*$day['nights']) + $day['day_meal'] + ($day['own_days']*$day['own_rate']);
+
       ?>
             <tr class="search-items">
               <td>
@@ -430,6 +448,8 @@ if($action == 'all'){
                             echo "Look for own Accomodation";
                           }else if($day['logistics'] == 3){
                             echo "One Day Return";
+                          }else if($day['logistics'] == 4){
+                            echo "Accomodated / Own Accomodation";
                           }
                         ?>                                          
                       </span>
@@ -452,7 +472,7 @@ if($action == 'all'){
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <div class="user-meta-info">
-                      <h6 class="user-name mb-0" data-name="">MK<?=number_format(($day['rate']*$day['nights'])+$day['day_meal'], 2, '.',',')?></h6>
+                      <h6 class="user-name mb-0" data-name="">MK<?=number_format($allowances)?></h6>
                       <span>MK<?=number_format($day['total_budget'], 2, '.',',')?></span>
                     </div>
                   </div>
@@ -524,6 +544,7 @@ if($action == 'all'){
       $allowances = 0;
       $fuels = 0;
       $total = 0;
+      $tollgate = 0;
       $all = $con->getRows('travel_advance_request', array('where'=>'(request_status >=2 and request_status <=5) and date_approved >="'.$first_date.'" and date_approved <= "'.$last_date.'"'));
       if(!empty($all)){
         
@@ -531,10 +552,12 @@ if($action == 'all'){
           $allowances +=($count['rate']*$count['nights'])+$count['day_meal'];
           $fuels +=$count['total_fuel'];
           $total +=$count['total_budget'];
+          $tollgate +=$count['tollgate_fees'];
         }
       }
     ?>
     <th>Total Allowances<br> MK<?=number_format($allowances,2,'.',',')?></th>
+    <th>Total Tollgate Fees<br> MK<?=number_format($tollgate,2,'.',',')?></th>
     <th>Total Fuel<br> MK<?=number_format($fuels,2,'.',',')?></th>
     <th>Total<br> MK<?=number_format($total,2,'.',',')?></th></th>
   </tr>  
@@ -560,6 +583,8 @@ if($action == 'all'){
           $i=0;
           foreach($leave as $day){ 
             $i++;
+            $allowances = ($day['rate']*$day['nights']) + $day['day_meal'] + ($day['own_days']*$day['own_rate']);
+
       ?>
             <tr class="search-items">
               <td>
@@ -592,6 +617,8 @@ if($action == 'all'){
                             echo "Look for own Accomodation";
                           }else if($day['logistics'] == 3){
                             echo "One Day Return";
+                          }else if($day['logistics'] == 4){
+                            echo "Accomodated / Own Accomodation";
                           }
                         ?>                                          
                       </span>
@@ -614,7 +641,7 @@ if($action == 'all'){
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <div class="user-meta-info">
-                      <h6 class="user-name mb-0" data-name="">MK<?=number_format(($day['rate']*$day['nights'])+$day['day_meal'], 2, '.',',')?></h6>
+                      <h6 class="user-name mb-0" data-name="">MK<?=number_format($allowances, 2, '.',',')?></h6>
                       <span>MK<?=number_format($day['total_budget'], 2, '.',',')?></span>
                     </div>
                   </div>
@@ -686,6 +713,7 @@ if($action == 'all'){
       $allowances = 0;
       $fuels = 0;
       $total = 0;
+      $tollgate = 0;
       $all = $con->getRows('travel_advance_request', array('where'=>'(request_status >=2 and request_status <=5) and date_approved >="'.$first_date.'" and date_approved <= "'.$last_date.'"'));
       if(!empty($all)){
         
@@ -693,10 +721,12 @@ if($action == 'all'){
           $allowances +=($count['rate']*$count['nights'])+$count['day_meal'];
           $fuels +=$count['total_fuel'];
           $total +=$count['total_budget'];
+          $tollgate +=$count['tollgate_fees'];
         }
       }
     ?>
     <th>Total Allowances<br> MK<?=number_format($allowances,2,'.',',')?></th>
+    <th>Total Tollgate Fees<br> MK<?=number_format($tollgate,2,'.',',')?></th>
     <th>Total Fuel<br> MK<?=number_format($fuels,2,'.',',')?></th>
     <th>Total<br> MK<?=number_format($total,2,'.',',')?></th></th>
   </tr>  
@@ -722,6 +752,8 @@ if($action == 'all'){
           $i=0;
           foreach($leave as $day){ 
             $i++;
+            $allowances = ($day['rate']*$day['nights']) + $day['day_meal'] + ($day['own_days']*$day['own_rate']);
+
       ?>
             <tr class="search-items">
               <td>
@@ -754,6 +786,8 @@ if($action == 'all'){
                             echo "Look for own Accomodation";
                           }else if($day['logistics'] == 3){
                             echo "One Day Return";
+                          }else if($day['logistics'] == 4){
+                            echo "Accomodated / Own Accomodation";
                           }
                         ?>                                          
                       </span>
@@ -776,7 +810,7 @@ if($action == 'all'){
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <div class="user-meta-info">
-                      <h6 class="user-name mb-0" data-name="">MK<?=number_format(($day['rate']*$day['nights'])+$day['day_meal'], 2, '.',',')?></h6>
+                      <h6 class="user-name mb-0" data-name="">MK<?=number_format($allowances, 2, '.',',')?></h6>
                       <span>MK<?=number_format($day['total_budget'], 2, '.',',')?></span>
                     </div>
                   </div>
@@ -860,17 +894,19 @@ if($action == 'all'){
       $allowances = 0;
       $fuels = 0;
       $total = 0;
-      
+      $tollgate = 0;
       if(!empty($all)){
         
         foreach($all as $count){
           $allowances +=($count['rate']*$count['nights'])+$count['day_meal'];
           $fuels +=$count['total_fuel'];
           $total +=$count['total_budget'];
+          $tollgate += $count['tollgate_fees']; 
         }
       }
     ?>
     <th>Total Allowances<br> MK<?=number_format($allowances,2,'.',',')?></th>
+    <th>Total Tollgate Fees<br> MK<?=number_format($tollgate,2,'.',',')?></th>
     <th>Total Fuel<br> MK<?=number_format($fuels,2,'.',',')?></th>
     <th>Total<br> MK<?=number_format($total,2,'.',',')?></th></th>
   </tr>  
@@ -895,6 +931,8 @@ if($action == 'all'){
           $i=0;
           foreach($leave as $day){ 
             $i++;
+            $allowances = ($day['rate']*$day['nights']) + $day['day_meal'] + ($day['own_days']*$day['own_rate']);
+
       ?>
             <tr class="search-items">
               <td>
@@ -927,6 +965,8 @@ if($action == 'all'){
                             echo "Look for own Accomodation";
                           }else if($day['logistics'] == 3){
                             echo "One Day Return";
+                          }else if($day['logistics'] == 4){
+                            echo "Accomodated / Own Accomodation";
                           }
                         ?>                                          
                       </span>
@@ -949,7 +989,7 @@ if($action == 'all'){
                 <div class="d-flex align-items-center">
                   <div class="ms-3">
                     <div class="user-meta-info">
-                      <h6 class="user-name mb-0" data-name="">MK<?=number_format(($day['rate']*$day['nights'])+$day['day_meal'], 2, '.',',')?></h6>
+                      <h6 class="user-name mb-0" data-name="">MK<?=number_format($allowances, 2, '.',',')?></h6>
                       <span>MK<?=number_format($day['total_budget'], 2, '.',',')?></span>
                     </div>
                   </div>

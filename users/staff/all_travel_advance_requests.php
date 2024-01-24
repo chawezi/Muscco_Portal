@@ -94,6 +94,8 @@
                                               echo "Look for own Accomodation";
                                             }else if($day['logistics'] == 3){
                                               echo "One Day Return";
+                                            }else if($day['logistics'] == 4){
+                                              echo "Accomodated / Own Accomodation";
                                             }
                                           ?>                                          
                                         </span>
@@ -106,7 +108,7 @@
                                     <div class="ms-3">
                                       <div class="user-meta-info">
                                         <h6 class="user-name mb-0" data-name="">MK<?=number_format($day['total_budget'], 2, '.',',')?></h6>
-                                        <span><?=$day['nights']?> Night(s)</span>
+                                        <span><?php $nights=$day['nights']+$day['own_days']; echo $nights;?> Night(s)</span>
                                       </div>
                                     </div>
                                   </div>

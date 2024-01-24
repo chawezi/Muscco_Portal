@@ -169,18 +169,17 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                               </div>
                               <div class="table-responsive">
                                 <table class="table align-middle  mb-0">
-                                  <?php 
-                                      $checker = $con->getRows('travel_advance_request a, muscco_members b',
-                        array('where'=>'a.travel_advance_id="'.$request_id.'" and a.checked_by=b.muscco_member_id', 'return_type'=>'single'));
-                                        if(!empty($checker)){
-                                    ?>
                                   <thead>
                                     <tr class="text-muted fw-semibold">
                                       <th scope="col" class="ps-0" colspan="5">Checked By</th>
                                     </tr>
                                   </thead>
                                   <tbody class="border-top">
-                                    
+                                    <?php 
+                                      $checker = $con->getRows('travel_advance_request a, muscco_members b',
+                        array('where'=>'a.travel_advance_id="'.$request_id.'" and a.checked_by=b.muscco_member_id', 'return_type'=>'single'));
+                                        if(!empty($checker)){
+                                    ?>
                                     <tr>
                                       <td class="ps-0">
                                         <div class="d-flex align-items-center">
@@ -204,7 +203,9 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                                       </td>
                                       
                                     </tr>
-                                    <?php }?>
+                                    <?php }else{
+                                      echo "<tr><td>Waiting to be checked by the supervisor</td></tr>";
+                                    } ?>
                                     
                                     <?php 
                                       $authorizer = $con->getRows('travel_advance_request a, muscco_members b',
@@ -212,7 +213,7 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                                         if(!empty($authorizer)){
                                     ?>
                                     <tr class="text-muted fw-semibold">
-                                      <th scope="col" class="ps-0" colspan="5">Request Authorization</th>
+                                      <th scope="col" class="ps-0" colspan="5">Vehicle Authorization</th>
                                     </tr>
                                     <tr>
                                       <td class="ps-0">
@@ -232,9 +233,7 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                                         <span><?=$authorizer['approver_note']?></span>
                                       </td>
                                     </tr>
-                                    <?php }else{
-                                      echo'<div class="alert alert-primary" role="alert"> Waiting for the approval.</div>';
-                                    } ?>
+                                    <?php } ?>
                                     
                                   </tbody>
                                 </table>
@@ -255,11 +254,11 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                             <div class="card shadow-none mt-3 mb-0">
 
                               <table class="table border table-striped table-bordered">
-                                <tr>
-                                  <th>Employment #</th>
-                                  <td><?=$member['employee_id']?></td>
+                                <tr>                                  
                                   <th>Requested By</th>
                                   <td><?=ucwords($member['first_name'])." ".ucwords($member['last_name'])?></td>
+                                  <th>Date Posted</th>
+                                  <td><?=$con->shortDate($member['date_posted'])?></td>
                                 </tr>  
                                 <tr>
                                   <th>Pillar</th>
@@ -310,48 +309,84 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
                                               echo "Look for own Accomodation";
                                             }else if($member['logistics'] == 3){
                                               echo "One Day Return";
+                                            }else if($member['logistics'] == 4){
+                                              echo "Accomodated / Own Accomodation";
                                             }
                                           ?>
                                   </td>
                                   <th>Night(s)</th>
-                                  <td><?=$member['nights']?></td>
+                                  <td>
+                                    <?php
+                                      if($member['logistics'] == 4){
+                                        $days = $member['nights'] + $member['own_days'];
+                                        echo $days.' ('.$member['nights'].' <small>Accomodated</small><br/>'.$member['own_days'].' <small>Own Accomodation</small>)';
+                                      }else{
+                                        echo $member['nights'];
+                                      }
+
+                                      $allowances = ($member['rate']*$member['nights']) + $member['day_meal'] + ($member['own_days']*$member['own_rate']);
+                                      
+                                    ?>
+                                      
+                                    </td>
                                 </tr>
                                 <tr>
                                   <th>Rate Per Night</th>
                                   
-                                  <td>MK<?=number_format($member['rate'], 2, '.',',')?></td>
+                                  <td>
+                                    <?php 
+                                        if($member['logistics'] == 4){
+                                            echo 'MK'.number_format($member['rate'], 2, '.',',').' <small>Accomodated</small><br/>MK'.number_format($member['own_rate'], 2, '.',',').' <small>Own Accomodation</small>';
+                                        }else{
+                                          echo 'MK'.number_format($member['rate'], 2, '.',',');
+                                        }
+                                        
+                                    ?>
+                                      
+                                  </td>
                                   <th>Day Meal</th>
                                   <td>MK<?=number_format($member['day_meal'], 2, '.',',')?></td>
                                 </tr>
                                 <tr>
                                   <th>Total Allowance</th>
                                   
-                                  <td>MK<?=number_format($member['rate']*$member['nights']+$member['day_meal'], 2, '.',',')?></td>
-                                  <th>Mileage</th>
-                                  <td><?=$member['mileage']?>KMs</td>
+                                  <td>MK<?=number_format($allowances, 2, '.',',')?></td>
+                                  <th>Tollgate Fees</th>
+                                  <td>MK<?=number_format($member['tollgate_fees'], 2, '.',',')?></td>
+                                  
                                 </tr>
                                 <tr>
+                                  <th>Mileage</th>
+                                  <td><?=$member['mileage']?>KMs</td>
                                   <th>Fuel Type</th>
                                   
                                   <td>
                                     <?php
-                                      $fuel = $con->getRows('fuel_prices', array('where'=>'fuel_id="'.$member['fuel'].'"','return_type'=>'single')); if(!empty($fuel)){ echo $fuel['fuel'];}else{echo "-";}?></td>
+                                      $fuel = $con->getRows('fuel_prices', 
+                                                      array('where'=>'fuel_id="'.$member['fuel'].'"','return_type'=>'single')); 
+                                      if(!empty($fuel)){
+                                        echo $fuel['fuel'];
+                                      }else{
+                                        echo "-";
+                                      }
+                                    ?></td>
+                                  
+                                </tr>
+                                <tr>
                                   <th>Fuel Price / Litre</th>
-                                  <td>MK<?php if(!empty($member['fuel_price'])){echo number_format($member['fuel_price'], 2, '.',',');}else{echo "0.00";}?></td>
+                                  <td>MK<?=number_format($member['fuel_price'], 2, '.',',')?></td>
+                                  
+                                  <th>Total Fuel(Litres)</th>
+                                  <td><?=$member['mileage']/10?> Litres</td>
                                 </tr>
                                 <tr>
                                   <th>Total Fuel(MWK)</th>
                                   
                                   <td>MK<?=number_format($member['total_fuel'], 2, '.',',')?></td>
-                                  <th>Total Fuel(Litres)</th>
-                                  <td><?=$member['mileage']/10?> Litres</td>
-                                </tr>
-                                <tr>
                                   <th>Total Budget</th>
                                   
                                   <td>MK<?=number_format($member['total_budget'], 2, '.',',')?></td>
-                                  <th>Date Posted</th>
-                                  <td><?=$con->shortDate($member['date_posted'])?></td>
+                                  
                                 </tr>
                               </table>
                             </div>
@@ -380,20 +415,3 @@ $member = $con->getRows('travel_advance_request a, pillars c, muscco_members b',
     </div>
   </div>
 </div>
-
-<script src="../../dist/libs/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript">
-  function getDays(){
-    let action = "get_days";
-    let id = "<?=$member_id?>";
-    $.ajax({
-        url:"get_leave_data.php",
-        method:"GET",
-        data:{action:action, id:id},
-        success:function(data){ 
-            $('#show_leave_types').html(data);
-        }
-    });
-  }
-  getDays();
-</script>

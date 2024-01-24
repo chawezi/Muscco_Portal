@@ -1,9 +1,8 @@
 <?php
-  $status = '';
-  $checker = $con->getRows('travel_advance_request', array('where'=>'employee_id="'.$_SESSION['USR_ID'].'" and request_status = 2', 'return_type'=>'count'));
-  if($checker >= 2){
-    $status = 'not liquidated';
-  }
+  $band = $_SESSION['USR_BD'];
+  $get_meal = $con->getRows('band_rates', array('where'=>'band_id="'.$band.'"','return_type'=>'single'));
+  $meal = $get_meal['withoutaccomodation_nomeals'];
+  
 ?>
 <div class="card bg-light-info shadow-none position-relative overflow-hidden">
   <div class="card-body px-4 py-3">
@@ -50,12 +49,16 @@
                     <div class="card">
                     <div class="card-body p-4">
                       <div id="error"></div>
-                      <?php 
-                        if($status == 'not liquidated'){
+                      <?php
+                        $is_complete = false;
+                        $get_quest = $con->getRows('travel_advance_request', 
+                                            array('where'=>'request_status =2 and employee_id="'.$_SESSION['USR_ID'].'"', 'return_type'=>'count'));
+                        if($get_quest > 1){
+                          $is_complete = true;
                           echo '<div class="alert alert-warning"> Hello '.$_SESSION['USR_NME'].', you still have unliquidated travel advance request. Please liquidate your past requests before posting a new one.</div>';
                         }
                       ?>
-                      <form id="daily-itinery" name="daily-itinery" action="" method="post">
+                      <form id="daily-itinery" action="" method="post">
                         <div class="row">
                           <b>Daily Itinerary</b>
                           <div id="itinerary_response"></div>
@@ -73,11 +76,11 @@
                           </div>
                           <div class="col-lg-3">
                             <label for="exampleInputPassword1" class="form-label fw-semibold"></label>
-                            <?php if($status == ''){ ?>
+                            <?php if($is_complete == false){ ?>
                             <button type="submit" name="add_itinery" id="add_btn"  class="btn btn-primary mt-4">Add</button>
-                            <?php } else{?>
-                            <button type="submit" name="" id="add_btn"  class="btn btn-primary mt-4" disabled>Add</button>
-                            <?php }?>
+                            <?php } else{ ?>
+                              <button type="submit" name="add_itinery" id="add_btn"  class="btn btn-primary mt-4" disabled>Add</button>
+                            <?php } ?>
                           </div>
                           <div class="col-lg-12">
                             <hr>
@@ -87,7 +90,7 @@
                       </form>
                       <div id="daily_itinery"></div>
                       <br>
-                      <form id="vehicle-request" name="vehicle-request" method="post" action="" enctype="multipart/form-data">                            
+                      <form id="vehicle-request" method="post" action="" enctype="multipart/form-data">                            
                         <div class="row">
 
                           
@@ -113,12 +116,24 @@
                                 <option value="1">Accomodated</option>
                                 <option value="2">Look for own Accomodation</option>
                                 <option value="3">One Day Return</option>
+                                <option value="4">Accommodated & Look for own Accomodation</option>
                               </select> 
                             </div> 
                             <div class="mb-4">
-                              <label for="exampleInputPassword1" class="form-label fw-semibold">Rate Per Night</label>
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Rate Per Night <small id="rate_msg">- Accomodated</small></label>
                               <input type="number" class="form-control" name="rate_night" id="rate_night" disabled>  
                             </div> 
+                            <div id="another_rate">
+                              <div class="mb-4">
+                                <label for="exampleInputPassword1" class="form-label fw-semibold">Rate Per Night <small>- Look for Own Accomodation</small></label>
+                                <input type="number" class="form-control" name="own_rate" id="own_rate" disabled>  
+                              </div> 
+                            </div>
+
+                            <div class="mb-4">
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Tollgate Fees</label>
+                              <input type="number" class="form-control" min="0" name="tollgate" id="tollgate">  
+                            </div>
                             <div class="mb-4">
                               <label for="exampleInputPassword1" class="form-label fw-semibold">Mileage</label>
                               <input type="number" class="form-control" name="mileage" id="mileage">  
@@ -135,11 +150,23 @@
                               <input type="text" class="form-control" name="purpose">  
                             </div>
                             <div class="mb-4">
-                              <label for="exampleInputPassword1" class="form-label fw-semibold">Night(s)</label>
-                              <input type="number" min="0" class="form-control" name="nights" id="nights" onChange="sum()">  
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Night(s) <small id="days_acc_msg">- Days Accomodated</small></label>
+                              <input type="number" min="0" class="form-control" name="nights" id="nights" onChange="sum()"> 
+                              
+                            </div>
+                            <div id="another_days">
+                              <div class="mb-4">
+                                <label for="exampleInputPassword1" class="form-label fw-semibold">Night(s) <small>- Days to look for own accomodation</small></label>
+                                <input type="number" min="0" class="form-control" name="other_nights" id="other_nights" onChange="sum()">  
+                                
+                              </div>
                             </div>
                             <div class="mb-4">
-                              <label for="exampleInputPassword1" class="form-label fw-semibold">Total Nights Allowance</label>
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Meal Allowance</label>
+                              <input type="number" class="form-control" name="meal" id="meal" value="<?=$meal?>" disabled>  
+                            </div> 
+                            <div class="mb-4">
+                              <label for="exampleInputPassword1" class="form-label fw-semibold">Total Allowances</label>
                               <input type="number" class="form-control" id="total_allowance" disabled>  
                             </div>
                             <div class="mb-4">
@@ -164,10 +191,10 @@
                            <div class="col-12">
                             <div class="d-flex align-items-center justify-content-end gap-3">
                               <input type="hidden" name="user_id" value="<?=$_SESSION['USR_ID']?>">
-                              <?php if($status == ''){ ?>
+                              <?php if($is_complete == false){ ?>
                               <button type="submit" name="travel_advance_request" id="vehicle_request"  class="btn btn-primary ">Submit Request</button>
-                              <?php }else{ ?>
-                              <button type="submit" name="" id="vehicle_request"  class="btn btn-primary " disabled>Submit Request</button>
+                              <?php } else{ ?>
+                                 <button type="submit" name="travel_advance_request" id="vehicle_request"  class="btn btn-primary " disabled>Submit Request</button>
                               <?php } ?>
                             </div>
                           </div>

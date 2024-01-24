@@ -901,6 +901,47 @@
 			echo "2";
 		}
 	}
+
+	//add fuel
+	if(isset($_POST['add_fuel'])){
+		$add_fuel = $con->insert('fuel_prices', 
+					       array(
+					       			'fuel'=>$con->clean($_POST['fuel']), 
+					       			'current_price'=>$_POST['fuel_price']
+					       		)
+								);
+		if(!empty($add_fuel)){
+			echo"5";
+		}else{
+			echo "6";
+		}
+	}
+
+	//update fuel
+	if(isset($_POST['update_fuel'])){
+		$add_fuel = $con->update('fuel_prices', 
+					       array(
+					       			'fuel'=>$con->clean($_POST['fuel']), 
+					       			'current_price'=>$_POST['fuel_price']
+					       		),
+					       array('fuel_id'=>$_POST['id'])
+								);
+		if(!empty($add_fuel)){
+			echo"7";
+		}else{
+			echo "8";
+		}
+	}
+
+	//delete fuel
+	if($action == 'delete_fuel'){
+		$delete = $con->delete('fuel_prices', array('fuel_id'=>$con->clean($_GET['id'])));
+		if(!empty($delete)){
+			echo "1";
+		}else{
+			echo "2";
+		}
+	}
 	
 	//add position
 	if(isset($_POST['add_position'])){
@@ -2708,25 +2749,38 @@
 
 	//post travel_advance_request
 	if(isset($_POST['travel_advance_request'])){
+		$own_days = 0;
+		$own_rate = 0;
+		$tollgate = 0;
+
 		//checks if the daily itenerary has been added
 		if(!isset($_SESSION['travel_advance_id'])){
 			echo "5";
 			exit();
 		}
-		/*
-		if(!empty($_POST['mileage']) || !empty($_POST['fuel'])){
-			echo "6";
-			exit();
-		}*/
+		
 		$mileage = 0;
 		$fuel = 0;
 		if(!empty($_POST['mileage'])){
 			$mileage = $con->clean($_POST['mileage']);
 			$fuel = $con->clean($_POST['fuel']);
 		}
+
 		if(!empty($_POST['fuel'])){
 			$fuel = $con->clean($_POST['fuel']);
 		}
+
+		if(!empty($_POST['other_nights'])){
+			$own_days = $con->clean($_POST['other_nights']);
+			//$own_rate = $_POST['own_rate'];
+		}
+		if(!empty($_POST['tollgate'])){
+			$tollgate = $con->clean($_POST['tollgate']);
+		}
+
+		
+
+
 		//gets band details
 		$band = $con->getRows('band_rates', array('where'=>'band_id="'.$_SESSION['USR_BD'].'"', 'return_type'=>'single'));
 
@@ -2755,9 +2809,15 @@
 			$day_meal = $band['withoutaccomodation_nomeals'];
 		}else if($_POST['logistics'] == 3){
 			//return same day
-			$rate_night = $band['withoutaccomodation_nomeals'];
+			$rate_night = 0;
 			$total_allowance = $_POST['nights'] * $band['withoutaccomodation_nomeals'];
-			$day_meal = 0;
+			$day_meal = $band['withoutaccomodation_nomeals'];
+		}else if($_POST['logistics'] == 4){
+			$rate_night = $band['with_accomodation'];
+			$own_rate   = $band['lumpsum'];
+			$total_allowance = ($band['with_accomodation'] * $_POST['nights']) + $band['withoutaccomodation_nomeals'] + ($own_rate * $own_days);
+			$day_meal = $band['withoutaccomodation_nomeals'];
+			
 		}
 
 		//calculate fuel prices
@@ -2767,7 +2827,7 @@
 		}
 
 		//total budget
-		$total =$total_allowance + $total_fuel;
+		$total =$total_allowance + $total_fuel + $tollgate;
 
 		//echo "hello".$fuel;
 
@@ -2796,7 +2856,10 @@
 					'total_fuel'		=> $total_fuel,
 					'fuel'				=> $con->clean($_POST['fuel']),
 					'fuel_price'		=> $current_price,
-					'total_budget'		=> $total
+					'total_budget'		=> $total,
+					'tollgate_fees'		=> $tollgate,
+					'own_rate'			=> $own_rate,
+					'own_days'			=> $own_days
 					);
 
 		$submit = $con->insert('travel_advance_request', $data);

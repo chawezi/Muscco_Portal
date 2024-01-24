@@ -139,6 +139,56 @@
 	    <!-- end row -->
 	  </tbody>
 	</table> 
+<?php } else if($action == "get_fuel"){ ?>
+	<table class="table border table-striped table-bordered display text-nowrap dataTable">
+	  <thead class="header-item">
+	    <th>
+	      #
+	    </th>
+	    <th>Fuel</th>
+	    <th>Current Price</th>
+	    <th>Action</th>
+	  </thead>
+	  <tbody>
+	    <!-- start row -->
+	    <?php
+	    	$fuels = $con->getRows('fuel_prices', array('order_by'=>'fuel'));
+	    	if(!empty($fuels)){
+	    		$i=0;
+	    		foreach ($fuels as $fuel) { 
+	    			$i++;
+	    	?>
+	    			
+	    			<tr>
+				      <td>
+				        <?=$i?>
+				      </td>
+				      <td>
+				      	<?=$fuel['fuel']?>
+				      </td>
+				      <td>
+				      	MK<?=number_format($fuel['current_price'],2,'.',',')?>
+				      </td>
+				      <td>
+				        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+	                <div class="btn-group me-2 mb-2" role="group" aria-label="First group">
+	                  <a href="dashboard.php?page=fuel&fuel_id=<?=$fuel['fuel_id']?>" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Udate Fuel" title="Update Fuel">
+	                    <i class="ti ti-pencil fs-4"></i>
+	                  </a>
+	                  <button class="btn btn-sm btn-danger btn-sm delete_fuel" data-id3="<?=$fuel['fuel_id']?>" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Delete Branch">
+	                    <i class="ti ti-trash fs-4"></i>
+	                  </button>
+	                </div>
+	              </div>
+				      </td>
+				    </tr>
+	    <?php		}
+	    	}
+	    ?>
+	    
+	    <!-- end row -->
+	  </tbody>
+	</table>
 <?php } ?>
 
 

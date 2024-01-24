@@ -99,6 +99,18 @@ function getDepartments(){
     });
 }
 
+function getFuel(){
+  let action = "get_fuel";
+    $.ajax({
+        url:"get_department_data.php",
+        method:"GET",
+        data:{action:action},
+        success:function(data){ 
+            $('#show_fuels').html(data);
+        }
+    });
+}
+
 function getDB(){
 let action = "get_db";
 $.ajax({
@@ -185,6 +197,51 @@ fetchAdvanceReport();
 getDepartments();
 fetchInvoiceReport();
 getProfile();
+getFuel();
+
+//generate reports
+$("#generate-report").validate({
+rules:
+{
+  date_from:{required:true},
+  date_to:{required:true},
+  section:{required:true}       
+ },
+ messages:
+ {
+   date_from:"Please select date from",
+   date_to:"Please select date to",
+   section: "please select the section"
+ },
+ submitHandler: generateReport
+});  
+/* validation */
+
+/* add measurement submit */
+function generateReport()
+{   
+  var data = $("#generate-report").serialize(); 
+  //alert('sup'); 
+    
+  $.ajax({
+    
+  type : 'GET',
+  url  : 'get_travel_advance_report.php',
+  data : data,
+  beforeSend: function()
+  { 
+    $("#error").fadeOut();
+    $("#generate_report").html('Generating...');
+  },
+  success :  function(response)
+    {    //alert(response);
+    $('#show_travel_advance_report').html(response);
+    $("#generate_report").html('Generate');
+
+    }
+  });
+    return false;
+}
 
 //add positions
 $("#add-position").validate({
@@ -351,10 +408,14 @@ function addBranch() {
 
 $("#manage-departments").validate({
       rules: {
-        department:{required:true}
+        department:{required:true},
+        fuel:{required:true},
+        fuel_price:{required:true},
       },
       messages: {
-        department:"Please enter department name"
+        department:"Please enter department name",
+        fuel:"Please enter fuel name",
+        fuel_price:"Please enter fuel current price",
       },
       submitHandler: addDepartment  
 });    
@@ -367,7 +428,7 @@ function addDepartment() {
     data : data,
     beforeSend: function(){ 
       $("#branch_error").fadeOut();
-      $("#manage_department").html('Adding Branch..');
+      $("#manage_department").html('Saving Data..');
       $("#update_branch").html('Updating..');
     },
     success : function(response){ //alert(response);
@@ -397,8 +458,34 @@ function addDepartment() {
           $("#update_department").html('Update');
         });
         $("#error").delay(6000).fadeOut(function(){});
+      }else if(response == 5) {                 
+       $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-success"> A fuel type has been saved successfully!</div>');
+          $("#manage_department").html('Save Fuel');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
+        $("#manage-departments")[0].reset();
+      }else if(response == 6) {                 
+        $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-danger"> Sorry, there is an error saving fuel, please try again.</div>');
+          $("#update_department").html('Save Fuel');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
+      }else if(response == 7) {                 
+       $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-success"> A fuel type has been updated successfully!</div>');
+          $("#manage_department").html('Update Fuel');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
+      }else if(response == 8) {                 
+        $("#error").fadeIn(1000, function(){            
+          $("#error").html('<div class="alert alert-danger"> Sorry, there is no information to update, please try again.</div>');
+          $("#update_department").html('Update Fuel');
+        });
+        $("#error").delay(6000).fadeOut(function(){});
       }
       getDepartments();
+      getFuel();
     }
   });
   return false;
@@ -1380,6 +1467,35 @@ $(document).on('click', '.advancerequest_week', function(){
                        $("#error").delay(6000).fadeOut(function(){});
                    }
                    getDB();
+               }
+           });
+       }
+    });
+
+    $(document).on('click', '.delete_fuel', function(){
+       var id=$(this).data("id3");
+
+       if(confirm("Are you sure you want to delete the selected fuel?")){
+           var action='delete_fuel';
+           $.ajax({
+               url:"../../settings/sql-master.php",
+               method:"GET",
+               data:{id:id, action:action},
+               dataType:"text",
+               success:function(data){ //alert(data);
+                   if(data == 1){
+                       $("#error").fadeIn(1000, function(){
+                           $("#error").html('<div class="alert alert-success" role="alert"> The selected fuel has been deleted successfully.</div>');
+                       });
+                       $("#error").delay(5000).fadeOut(function(){});
+                       //setTimeout(' window.location.href = ""; ', 5000);
+                   }else{
+                       $("#error").fadeIn(1000, function(){
+                           $("#error").html('<div class="alert alert-warning" role="alert"> Sorry, there was an error deleteting the selected fuel, please try again!</div>');
+                       });
+                       $("#error").delay(6000).fadeOut(function(){});
+                   }
+                   getFuel();
                }
            });
        }
